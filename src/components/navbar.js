@@ -27,6 +27,7 @@ const Navbar = (props) => {
     <NavbarComponent>
       <StyledNavLink to='/'>Home</StyledNavLink>
       <StyledNavLink to='/userlist'>UserList</StyledNavLink>
+      <StyledNavLink to='/doctorcreatevisits'>Utwórz wizyty</StyledNavLink>
       <RightSide>
         {LoginLogoutComponent}
       </RightSide>

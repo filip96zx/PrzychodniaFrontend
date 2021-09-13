@@ -28,8 +28,7 @@ const register = (data) => {
     body: JSON.stringify(data),
   };
   return fetch(`${config.apiURL}/users/register`, requestOptions)
-    .then((response) => response.text())
-    .then((text) => (text ? JSON.parse(text) : ''));
+  .then(handleResponse);
 };
 
 const forgotPassword = (data) => {
@@ -39,8 +38,7 @@ const forgotPassword = (data) => {
     body: JSON.stringify(data),
   };
   return fetch(`${config.apiURL}/users/forgotpassword`, requestOptions)
-    .then((response) => response.text())
-    .then((text) => (text ? JSON.parse(text) : ''));
+  .then(handleResponse);
 };
 
 const resetPassword = (data) => {
@@ -50,8 +48,8 @@ const resetPassword = (data) => {
     body: JSON.stringify(data),
   };
   return fetch(`${config.apiURL}/users/resetpassword`, requestOptions)
-    .then((response) => response.text())
-    .then((text) => (text ? JSON.parse(text) : ''));
+  .then(handleResponse);
+
 };
 
 const getRoles = () => {
@@ -71,8 +69,7 @@ const addRoleToUser = (data) => {
     body: JSON.stringify(data),
   };
   return fetch(`${config.apiURL}/admin/addrole`, requestOptions)
-    .then((response) => response.text())
-    .then((text) => (text ? JSON.parse(text) : ''));
+  .then(handleResponse);
 };
 
 const deleteRoleFromUser = (data) => {
@@ -82,8 +79,7 @@ const deleteRoleFromUser = (data) => {
     body: JSON.stringify(data),
   };
   return fetch(`${config.apiURL}/admin/removerole`, requestOptions)
-    .then((response) => response.text())
-    .then((text) => (text ? JSON.parse(text) : ''));
+  .then(handleResponse);
 };
 
 const updateUser = (data) => {
@@ -93,8 +89,7 @@ const updateUser = (data) => {
     body: JSON.stringify(data),
   };
   return fetch(`${config.apiURL}/users/updateuser`, requestOptions)
-    .then((response) => response.text())
-    .then((text) => (text ? JSON.parse(text) : ''));
+  .then(handleResponse)
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export

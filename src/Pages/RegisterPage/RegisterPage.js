@@ -62,30 +62,23 @@ const RegisterPage = () => {
   };
 
   const onSubmit = (data) => {
-    let info = [];
     setIsLoading(true);
     setSucceed(false);
     const newUser = { ...data, dateOfBirth: data.dateOfBirth.toISOString().slice(0,10), gender: parseInt(data.gender), userName: data.email };
     userService
       .register(newUser)
-      .then((message) => {
-        info.push(Object.entries(message));
+      .then(response => {
         setIsLoading(false);
-        if (info[0].length > 0) {
-          setErrorMessage(info[0][0][1]);
-        } else {
-          setSucceed(true);
-          setErrorMessage('Konto zostało utworzone.');
-          setTimeout(() => {
-            history.push('/');
-          }, 2000);
-        }
+        setSucceed(true);
+        setErrorMessage('Konto zostało utworzone.');
+        setTimeout(() => {
+          history.push('/');
+        }, 2000);
       })
-      .catch((err) => {
+      .catch(err => {
         setIsLoading(false);
-        setErrorMessage(String(err));
-      });
-
+        setErrorMessage(String(err))}
+      );
     if (!succeed) {
       setTimeout(() => {
         setErrorMessage('');

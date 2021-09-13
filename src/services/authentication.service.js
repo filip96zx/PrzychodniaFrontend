@@ -1,11 +1,11 @@
 import config from '../config';
 import handleResponse from '../helpers/handle-response';
 
-
 const login = (login, password) => {
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
     body: JSON.stringify({ login, password }),
   };
   return fetch(`${config.apiURL}/auth`, requestOptions)
