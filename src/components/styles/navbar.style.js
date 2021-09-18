@@ -4,8 +4,9 @@ import styled from 'styled-components';
 export const NavbarComponent = styled.div`
   position: relative;
   display: flex;
-  height: 3vh;
-  background-color: #ddd;
+  height: 3rem;
+  box-shadow: 0 4px 2px -2px orange;
+  
 `;
 
 export const StyledNavLink = styled(NavLink)`
@@ -15,7 +16,12 @@ export const StyledNavLink = styled(NavLink)`
   height: 100%;
   color: black;
   align-items: center;
-  margin: 0 10px;
+  padding: 0 5px;
+  transition: .2s;
+  &.active{
+    color: white;
+    background-color: orange;
+  }
   :hover{
     background-color: #ccc;
   }

@@ -3,7 +3,7 @@ import { NavbarComponent, StyledNavLink, RightSide } from './styles/navbar.style
 import { useAuth } from '../globalStates/GlobalStates';
 import authenticationService from '../services/authentication.service';
 
-const Navbar = (props) => {
+const Navbar = ({ hasRole }) => {
   const [isAuth, setLogedOut] = useAuth();
 
   const handleLogout = () => {
@@ -12,25 +12,27 @@ const Navbar = (props) => {
     window.location.reload();
   };
 
-  
   const LoginLogoutComponent = isAuth ? (
     <StyledNavLink className='login-link' to='/login' onClick={handleLogout}>
-    Logout
+      wyloguj
     </StyledNavLink>
   ) : (
     <StyledNavLink className='login-link' to='/login'>
-      Login
+      Zaloguj
     </StyledNavLink>
   );
 
   return (
     <NavbarComponent>
-      <StyledNavLink to='/'>Home</StyledNavLink>
-      <StyledNavLink to='/userlist'>UserList</StyledNavLink>
-      <StyledNavLink to='/doctorcreatevisits'>Utwórz wizyty</StyledNavLink>
-      <RightSide>
-        {LoginLogoutComponent}
-      </RightSide>
+      <StyledNavLink to='/' exact>
+        Strona główna
+      </StyledNavLink>
+      {hasRole('admin') && <StyledNavLink to='/userlist'>Panel admina</StyledNavLink>}
+      {hasRole('doctor') && <StyledNavLink to='/doctorcreatevisits'>Panel lekarza</StyledNavLink>}
+      {hasRole('user') && <StyledNavLink to='/patientregister'>Rejestracja wizyt</StyledNavLink>}
+      {hasRole('user') && <StyledNavLink to='/registeredvisits'>Zaplanowane wizyty</StyledNavLink>}
+      {hasRole('user') && <StyledNavLink to='/donevisits'>Historia wizyt</StyledNavLink>}
+      <RightSide>{LoginLogoutComponent}</RightSide>
     </NavbarComponent>
   );
 };

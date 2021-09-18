@@ -7,10 +7,16 @@ export const UserEditModalComponent = styled.div`
   align-items: center;
   top: 0;
   left: 0;
+  flex-grow: 1;
   background-color: rgba(0, 0, 0, 0.42);
-  height: 100%;
-  width: 100%;
+  @media(min-width:630px) and (min-height:700px){
+
+    height: 100vh;
+    width: 100vw;
+  }
+
   .modal {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -20,12 +26,16 @@ export const UserEditModalComponent = styled.div`
     border-radius: 1em;
     box-shadow: 0 0 2px 2px gray;
     .close-btn-container {
-      width: 100%;
-      display: flex;
-      justify-content: right;
+      position: absolute;
+      right:0;
+      top:0;
       button {
         margin: 10px;
       }
+    }
+    .modal-header{
+      width: 100%;
+      
     }
   }
 `;
@@ -37,7 +47,7 @@ export const UserEditFormComponent = styled.div`
   justify-content: center;
 
   div.role-form {
-    form{
+    form {
       display: flex;
       flex-wrap: wrap;
       padding-bottom: 2rem;
@@ -64,7 +74,6 @@ export const UserEditFormComponent = styled.div`
         height: 2.5rem;
       }
     }
-
   }
 
   form {

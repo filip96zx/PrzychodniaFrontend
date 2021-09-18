@@ -103,7 +103,10 @@ const UserEditModal = ({ closeModal, user, countries, roles, reloadUsers, reload
         </div>
         <UserEditFormComponent>
           <form onSubmit={handleSubmit(onSubmit)}>
+            <div className='modal-header'>
             <h3>Edytuj użytkownika</h3>
+
+            </div>
             <div className='form-group'>
               <div>
                 <label>

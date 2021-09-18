@@ -30,22 +30,29 @@ const UserListPage = () => {
 
   useEffect(() => {
     getCountries();
-    userService.getRoles().then((response) => setRoles(response.value));
+    userService.getRoles().then((response) => setRoles(response.value)).catch(err =>err);
   }, []);
 
   useEffect(() => {
     if (searchString !== '') {
-      userService.getUserListPaginatedFiltered(pageIndex, pageSize, searchString).then((response) => {
-        loadUsers(response);
-        setTotalCount(response.totalCount);
-        setIsLoading(false);
-      });
+      userService
+        .getUserListPaginatedFiltered(pageIndex, pageSize, searchString)
+        .then((response) => {
+          loadUsers(response);
+          if (response.pageIndex + 1 > Math.ceil(response.totalCount / response.pageSize)) setPageIndex(0);
+          setTotalCount(response.totalCount);
+          setIsLoading(false);
+        })
+        .catch(err => err);
     } else {
-      userService.getUserListPaginated(pageIndex, pageSize).then((response) => {
-        loadUsers(response);
-        setTotalCount(response.totalCount);
-        setIsLoading(false);
-      });
+      userService
+        .getUserListPaginated(pageIndex, pageSize)
+        .then((response) => {
+          loadUsers(response);
+          setTotalCount(response.totalCount);
+          setIsLoading(false);
+        })
+        .catch(err=> err);
     }
   }, [pageIndex, pageSize, reloadUsers, searchString]);
 
@@ -120,8 +127,8 @@ const UserListPage = () => {
 
   return (
     <UserListComponent>
-      <div className="search-element">
-      <input type='text' onChange={handleSearch} placeholder='szukaj' />
+      <div className='search-element'>
+        <input type='text' onChange={handleSearch} placeholder='szukaj' />
       </div>
       <table>
         <thead>
@@ -148,17 +155,17 @@ const UserListPage = () => {
           {users ? users : null}
         </tbody>
       </table>
-      <div className="pagination-element">
-      <button onClick={prevPage}>&lt;</button>
-      <button onClick={nextPage}>&gt;</button>
-      <select onChange={handleSetPageSize} value={pageSize}>
-        <option value={5}>5</option>
-        <option value={10}>10</option>
-        <option value={20}>20</option>
-      </select>
-      <span>
-        strona: {pageIndex * 1 + 1} z {Math.ceil(totalCount / pageSize)}
-      </span>
+      <div className='pagination-element'>
+        <button onClick={prevPage}>&lt;</button>
+        <button onClick={nextPage}>&gt;</button>
+        <select onChange={handleSetPageSize} value={pageSize}>
+          <option value={5}>5</option>
+          <option value={10}>10</option>
+          <option value={20}>20</option>
+        </select>
+        <span>
+          strona: {pageIndex * 1 + 1} z {Math.ceil(totalCount / pageSize)}
+        </span>
       </div>
       {showModal && <UserEditModal closeModal={handleCloseModal} countries={countries} user={userData} roles={roles} reload={reloadUsers} reloadUsers={setReloadUsers} />}
     </UserListComponent>

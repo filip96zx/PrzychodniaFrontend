@@ -11,36 +11,50 @@ import RegisterPage from './Pages/RegisterPage/RegisterPage';
 import ResetPasswordPage from './Pages/ResetPasswordPage/ResetPasswordPage';
 import UserListPage from './Pages/UserListPage/UserListPage';
 import DoctorCreateVisitsPage from './Pages/DoctorCreateVisitsPage/DoctorCreateVisitsPage';
+import PatientRegisterPage from './Pages/PatientRegisterPage/PatientRegisterPage';
+import PatientRegisteredVisitsPage from './Pages/PatientRegisteredVisitsPage/PatientRegisteredVisitsPage';
+import PatientDoneVisitsPage from './Pages/PatientDoneVisitsPage/PatientDoneVisitsPage';
 
 const App = () => {
   const [user, setUser] = useState();
   const [isLogged, setIsLogged, setIsLoggedOut] = useAuth();
 
-  // useLayoutEffect(() => {
-  //   setUser(authenticationService.getCurrentUser());
-  // }, []);
-
   useEffect(() => {
-    if (user) {
-      setIsLogged();
-    } else {
+    const user = authenticationService.getCurrentUser();
+    if (user === null || user === undefined) {
       setIsLoggedOut();
+    } else {
+      setUser(user);
+      setIsLogged();
     }
-  }, [user]);
+    setUser(user);
+  }, [isLogged]);
 
+  const hasRole = (data) => {
+    return user?.role.includes(data) ? true : false;
+  };
   return (
     <Router>
-      <Navbar></Navbar>
+      <Navbar hasRole={hasRole}></Navbar>
       <Container>
         <Switch>
-          <Route exact path='/'><HomePage/></Route>
-          <Route path='/forgotpassword'><ForgotPassword/></Route>
-          <Route path='/register'><RegisterPage/></Route>
-          <Route path='/doctorcreatevisits'><DoctorCreateVisitsPage/></Route>
-          <Route path='/resetpassword/:userId/:code'><ResetPasswordPage/></Route>
-          <Route path='/userlist/:pageSize/:pageIndex'><UserListPage/></Route>
-          <Route path='/userlist'><UserListPage/></Route>
-          <Route path='/login'>{isLogged ? <Redirect push to='/' /> : <LoginPage/> }</Route>
+          <Route exact path='/'>
+            <HomePage />
+          </Route>
+          <Route path='/register'>{isLogged ? <Redirect push to='/' /> : <RegisterPage />}</Route>
+          <Route path='/doctorcreatevisits'>{hasRole('doctor') ? <DoctorCreateVisitsPage /> : <Redirect push to='/' />}</Route>
+          <Route path='/patientregister'>{hasRole('user') ? <PatientRegisterPage /> : <Redirect push to='/' />}</Route>
+          <Route path='/registeredvisits'>{hasRole('user') ? <PatientRegisteredVisitsPage /> : <Redirect push to='/' />}</Route>
+          <Route path='/donevisits'>{hasRole('user') ? <PatientDoneVisitsPage /> : <Redirect push to='/' />}</Route>
+          <Route path='/userlist/:pageSize/:pageIndex'>{hasRole('admin') ? <UserListPage /> : <Redirect push to='/' />}</Route>
+          <Route path='/userlist'>{hasRole('admin') ? <UserListPage /> : <Redirect push to='/' />}</Route>
+          <Route path='/resetpassword/:userId/:code'>
+            <ResetPasswordPage />
+          </Route>
+          <Route path='/forgotpassword'>
+            <ForgotPassword />
+          </Route>
+          <Route path='/login'>{isLogged ? <Redirect push to='/' /> : <LoginPage />}</Route>
         </Switch>
       </Container>
     </Router>

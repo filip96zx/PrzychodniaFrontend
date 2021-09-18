@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import DoctorDayVisitsForm from '../../components/doctorDayVisitsForm';
 import { DoctorCreateVisitsComponent } from './style/DoctorCreateVisitsPage.Style';
 import doctorService from '../../services/doctor.service';
-import authHeader from '../../helpers/auth-header';
+import VisitDetailsModal from '../../components/visitDetailsModal';
 
 const daysInfo = [
   { property: 'monday', number: 1, name: 'Poniedziałek' },
@@ -45,13 +45,29 @@ const DoctorCreateVisitsPage = () => {
       default:
         break;
     }
-    return monday.toISOString().slice(0, 10);
+    monday = monday.toLocaleDateString().length === 10 ? monday.toLocaleDateString() : '0' + monday.toLocaleDateString();
+    return monday.slice(6, 11) + '-' + monday.slice(3, 5) + '-' + monday.slice(0, 2);
   };
   const [searchDate, setSearchDate] = useState(selectMonday(new Date()));
 
+  const [doctorTypes, setDoctorTypes] = useState(['']);
+
+  const [showModal, setShowModal] = useState(false);
+  const [visitDetails, setVisitDetails] = useState({});
+
   useEffect(() => {
     getVisitsInWeek();
+    getDoctorTypes();
   }, [searchDate]);
+
+  const getDoctorTypes = () => {
+    doctorService
+      .getDoctorTypes()
+      .then((response) => {
+        setDoctorTypes(response.value);
+      })
+      .catch((err) => (setWarningMessage('Błąd podczas pobierania specjalizacji'), setWarning(true)));
+  };
 
   const getVisitsInWeek = () => {
     doctorService
@@ -70,23 +86,24 @@ const DoctorCreateVisitsPage = () => {
   };
 
   const deleteVisit = (visitId) => {
-    const confirm = window.confirm("Potwierdź usunięcie wizyty");
-    if(confirm) {
-      doctorService.deleteVisit(visitId).then(
-        setWarning(true),
-        setWarningMessage("Wizyta została usunięta"),
-        setTimeout(() => {
-          loadVisitsAfterDelete()
-        }, 100)
-      ).catch(err => {
-        setWarning(true);
-        setWarningMessage("Błąd");
-      })
+    const confirm = window.confirm('Potwierdź usunięcie wizyty');
+    if (confirm) {
+      doctorService
+        .deleteVisit(visitId)
+        .then(
+          setTimeout(() => {
+            loadVisitsAfterDelete();
+          }, 200)
+        )
+        .catch((err) => {
+          setWarning(true);
+          setWarningMessage('Błąd');
+        });
     }
-  }
+  };
 
   const loadVisitsAfterDelete = () => {
-    const notAddedVisits = visitsToAdd.map(visit => ({visitId: visit, visitStatus:5,doctor:""}))
+    const notAddedVisits = visitsToAdd.map((visit) => ({ visitId: visit, visitStatus: 5, doctor: '' }));
     doctorService
       .getVisitsInWeek(new Date(searchDate))
       .then((response) => {
@@ -99,19 +116,18 @@ const DoctorCreateVisitsPage = () => {
         setWarning(true);
         setWarningMessage('Brak wizyt w tym tygodniu');
       });
-  } 
+  };
 
   const addNewVisits = () => {
-    const visitsData = visitsToAdd.map((visit) => ({ visitDate: visit }));
+    const visitsData = visitsToAdd.map((visit) => ({ visitDate: visit.visitId, visitType: visit.visitType }));
     if (visitsData.length > 0) {
       doctorService
         .addVisits({ visitsList: visitsData })
-        .then(response => {
-          setWarningMessage('Dodano nowe wizyty'); 
+        .then((response) => {
+          setWarningMessage('Dodano nowe wizyty');
           setWarning(true);
-          getVisitsInWeek(); 
-          }
-        )
+          getVisitsInWeek();
+        })
         .catch((err) => {
           setWarning('Błąd podczas dodawania wizyt');
           setWarning(true);
@@ -154,9 +170,9 @@ const DoctorCreateVisitsPage = () => {
     setVisitsToAdd([...visitsToAdd, visit]);
   };
 
-  const handleDeleteFromVisitsToAdd = (visit) => {
+  const handleDeleteFromVisitsToAdd = (visitId) => {
     let newVisitList = [...visitsToAdd];
-    newVisitList.splice(newVisitList.indexOf(visit, 1));
+    newVisitList = newVisitList.filter((visit) => visit.visitId !== visitId);
     setVisitsToAdd(newVisitList);
   };
 
@@ -173,30 +189,30 @@ const DoctorCreateVisitsPage = () => {
     visits.forEach((visit) => {
       switch (new Date(visit.visitId).getDay()) {
         case 1:
-          monday = [...monday, [new Date(visit.visitId).toLocaleTimeString().slice(0, 5), visit.visitStatus, visit.visitId]];
+          monday = [...monday, { time: new Date(visit.visitId).toLocaleTimeString().slice(0, 5), status: visit.visitStatus, visitId: visit.visitId, visitType: visit.visitType }];
           break;
         case 2:
-          tuesday = [...tuesday, [new Date(visit.visitId).toLocaleTimeString().slice(0, 5), visit.visitStatus, visit.visitId]];
+          tuesday = [...tuesday, { time: new Date(visit.visitId).toLocaleTimeString().slice(0, 5), status: visit.visitStatus, visitId: visit.visitId, visitType: visit.visitType }];
           break;
         case 3:
-          wednesday = [...wednesday, [new Date(visit.visitId).toLocaleTimeString().slice(0, 5), visit.visitStatus, visit.visitId]];
+          wednesday = [...wednesday, { time: new Date(visit.visitId).toLocaleTimeString().slice(0, 5), status: visit.visitStatus, visitId: visit.visitId, visitType: visit.visitType }];
           break;
         case 4:
-          thursday = [...thursday, [new Date(visit.visitId).toLocaleTimeString().slice(0, 5), visit.visitStatus, visit.visitId]];
+          thursday = [...thursday, { time: new Date(visit.visitId).toLocaleTimeString().slice(0, 5), status: visit.visitStatus, visitId: visit.visitId, visitType: visit.visitType }];
           break;
         case 5:
-          friday = [...friday, [new Date(visit.visitId).toLocaleTimeString().slice(0, 5), visit.visitStatus, visit.visitId]];
+          friday = [...friday, { time: new Date(visit.visitId).toLocaleTimeString().slice(0, 5), status: visit.visitStatus, visitId: visit.visitId, visitType: visit.visitType }];
           break;
         default:
           break;
       }
     });
     setDayVisitsLists({
-      monday: monday.sort((a, b) => (a[0] > b[0] ? 1 : -1)),
-      tuesday: tuesday.sort((a, b) => (a[0] > b[0] ? 1 : -1)),
-      wednesday: wednesday.sort((a, b) => (a[0] > b[0] ? 1 : -1)),
-      thursday: thursday.sort((a, b) => (a[0] > b[0] ? 1 : -1)),
-      friday: friday.sort((a, b) => (a[0] > b[0] ? 1 : -1)),
+      monday: monday.sort((a, b) => (a.time > b.time ? 1 : -1)),
+      tuesday: tuesday.sort((a, b) => (a.time > b.time ? 1 : -1)),
+      wednesday: wednesday.sort((a, b) => (a.time > b.time ? 1 : -1)),
+      thursday: thursday.sort((a, b) => (a.time > b.time ? 1 : -1)),
+      friday: friday.sort((a, b) => (a.time > b.time ? 1 : -1)),
     });
   };
 
@@ -205,18 +221,58 @@ const DoctorCreateVisitsPage = () => {
     setSearchDate(monday);
   };
 
+  const dayDateHeader = (dayNumber) => {
+    let date = new Date(new Date(searchDate).setDate(new Date(searchDate).getDate() - 1 + dayNumber)).toLocaleDateString();
+    date = date.length === 10 ? date : '0' + date;
+    return date.slice(0, 5);
+  };
+
+  const getVisitDetails = (visitId) => {
+    const data = { visitId };
+    doctorService
+      .getVisitDetails(data)
+      .then((response) => {
+        setVisitDetails(response.value);
+        setShowModal(true);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const handeFinishVisit = (data) => {
+    doctorService
+      .finishVisit(data)
+      .then((response) => {
+        getVisitDetails(data.visitId);
+        getVisitsInWeek();
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const handeCancelVisit = (data) => {
+    doctorService
+      .cancelVisit(data)
+      .then((response) => {
+        getVisitDetails(data.visitId);
+        getVisitsInWeek();
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
-    <DoctorCreateVisitsComponent>
-      <div className='date-pick-box'>
-        <label>
-          Wybierz tydzień
-          <input type='date' onChange={handleDateChange} value={searchDate} />
-        </label>
-      </div>
-      {daysInfo.map((day) => (
-        <div key={day.number}>
+    <>
+      <DoctorCreateVisitsComponent>
+        <div className='date-pick-box'>
           <label>
-            {day.name}
+            Wybierz tydzień{' '}
+            <input type='date' onChange={handleDateChange} value={searchDate} />
+          </label>
+        </div>
+        {daysInfo.map((day) => (
+          <div className='day-column' key={day.number}>
+            <div className='day-header'>
+              <div>{dayDateHeader(day.number)}</div>
+              <div>{day.name}</div>
+            </div>
             <DoctorDayVisitsForm
               weekDay={day.number}
               dayProperty={day.property}
@@ -230,19 +286,22 @@ const DoctorCreateVisitsPage = () => {
               setWarning={setWarning}
               setWarningMsg={setWarningMessage}
               deleteVisit={deleteVisit}
+              doctorTypes={doctorTypes}
+              getVisitDetails={getVisitDetails}
             />
-          </label>
+          </div>
+        ))}
+        {warning && (
+          <div className='warning-box'>
+            <span>{warningMessage}</span>
+          </div>
+        )}
+        <div className='save-visit-box'>
+          <button onClick={addNewVisits}>Zapisz nowe wizyty</button>
         </div>
-      ))}
-      {warning && (
-        <div className='warning-box'>
-          <span>{warningMessage}</span>
-        </div>
-      )}
-      <div className='add-visits-box'>
-        <button onClick={addNewVisits}>Zapisz nowe wizyty</button>
-      </div>
-    </DoctorCreateVisitsComponent>
+      </DoctorCreateVisitsComponent>
+      {showModal && <VisitDetailsModal isDoctor={true} closeModal={() => setShowModal(false)} visit={visitDetails} finishVisit={handeFinishVisit} cancelVisit={handeCancelVisit} />}
+    </>
   );
 };
 
