@@ -5,11 +5,12 @@ export const FormComponent = styled.div`
   justify-content: center;
   position: relative;
   padding: 20px;
-  max-width: 600px;
+  width: fit-content;
   padding-top: 2.5rem;
-  margin-top: 1rem;
+  margin: 1rem auto;
   box-shadow: 0 0 2px 1px lightblue;
   border-radius: 1em;
+  height: auto;
   span {
     position: absolute;
     color: red;

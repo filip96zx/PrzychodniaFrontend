@@ -27,9 +27,15 @@ const UserListPage = () => {
   const [roles, setRoles] = useState();
   const [reloadUsers, setReloadUsers] = useState(false);
   const [searchString, setSearchString] = useState('');
+  const [specialisations, setSpecialisations] = useState([]);
+  const [removableSpecialisations, setRemovableSpecialisations] = useState([]);
+  const [specialisationToDelete, setSpecialisationToDelete] = useState('');
+  const [specialisationToAdd, setSpecialisationToAdd] = useState('');
 
   useEffect(() => {
     getCountries();
+    loadSpecialisations();
+    loadRemovableSpecialisations();
     userService.getRoles().then((response) => setRoles(response.value)).catch(err =>err);
   }, []);
 
@@ -125,11 +131,45 @@ const UserListPage = () => {
     setSearchString(e.target.value);
   };
 
+  const loadSpecialisations = () => {
+    userService.getSpecialisations().then(response => {
+      setSpecialisations(response.value);
+    }
+      ).catch(err => err);
+  }
+
+  const loadRemovableSpecialisations = () => {
+    userService.getRemovableSpecialisations().then(response => {
+      setRemovableSpecialisations(response.value);
+    }
+      ).catch(err => err);
+  }
+
+  const handleAddSpecialisation = () => {
+    if(specialisationToAdd !== ''){
+      const data = {roleName: specialisationToAdd}
+      userService.addSpecialisation(data).then(reponse => {
+        loadSpecialisations();
+        loadRemovableSpecialisations();
+      }).catch(err => err)
+    }
+  }
+  const handleDeleteSpecialisation = () => {
+    if(specialisationToDelete !== ''){
+      const data = {roleName: specialisationToDelete}
+      userService.deleteSpecialisation(data).then(reponse => {
+        loadSpecialisations();
+        loadRemovableSpecialisations();
+      }).catch(err => err)
+    }
+  }
+
   return (
     <UserListComponent>
       <div className='search-element'>
         <input type='text' onChange={handleSearch} placeholder='szukaj' />
       </div>
+      <div>
       <table>
         <thead>
           <tr>
@@ -166,6 +206,25 @@ const UserListPage = () => {
         <span>
           strona: {pageIndex * 1 + 1} z {Math.ceil(totalCount / pageSize)}
         </span>
+      </div>
+      </div>
+      <div className="role-manage-box">
+        <div><strong>lista specjalizacji</strong></div>
+        <div>{specialisations.map(x => x + ' ')}</div>
+        <label >
+          Dodaj specjalizację: <input type="text" value={specialisationToAdd} onChange={(e)=>setSpecialisationToAdd(e.target.value)}/>
+        </label>
+            <button onClick={handleAddSpecialisation}>dodaj</button>
+        <label >
+          Usuń specjalizację: 
+          <select value={specialisationToDelete} onChange={(e)=>setSpecialisationToDelete(e.target.value)}>
+            <option value={''}> </option>
+            {removableSpecialisations.map(spec =>
+              <option key={spec} value={spec}>{spec}</option>
+              )}
+          </select>
+        </label>
+        <button onClick={handleDeleteSpecialisation}>usuń</button>
       </div>
       {showModal && <UserEditModal closeModal={handleCloseModal} countries={countries} user={userData} roles={roles} reload={reloadUsers} reloadUsers={setReloadUsers} />}
     </UserListComponent>

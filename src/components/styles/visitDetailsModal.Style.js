@@ -22,7 +22,6 @@ export const VisitDetailModalComponent = styled.div`
     border-radius: 1em;
     box-shadow: 0 0 2px 2px gray;
     @media (min-width: 630px) and (min-height: 700px) {
-
       min-width: 45rem;
     }
     flex-wrap: wrap;
@@ -36,7 +35,6 @@ export const VisitDetailModalComponent = styled.div`
 
     .modal-header {
       width: 100%;
-      //text-align: center;
       h3 {
         margin: 8px 8px 8px 30px;
       }
@@ -54,9 +52,12 @@ export const VisitDetailModalComponent = styled.div`
         transition: 0.2s;
       }
       li:hover {
-        box-shadow: 0px 2px 1px 0px gray;
+        transition: 0.2s;
+        box-shadow: 1px 1px 1px 0px gray;
       }
       li.active {
+        transition: 0.2s;
+        background-color: rgb(245, 245, 245);
         box-shadow: 2px 2px 1px 0px gray;
       }
     }
@@ -69,7 +70,7 @@ export const VisitDetailModalComponent = styled.div`
       min-height: 30rem;
       min-width: 20rem;
       align-items: flex-start;
-      margin-left: 5rem;
+      margin-left: 2rem;
       padding-bottom: 1rem;
       div {
         padding: 15px;
@@ -79,7 +80,7 @@ export const VisitDetailModalComponent = styled.div`
     div.info-box {
       @media (min-width: 630px) and (min-height: 700px) {
         position: absolute;
-      } 
+      }
       right: 2rem;
       top: 2rem;
       box-shadow: 0 0 1px 0 gray;
@@ -91,8 +92,135 @@ export const VisitDetailModalComponent = styled.div`
       }
     }
   }
-  
-  button{
+  button {
     margin: 0px 10px;
+  }
+
+  .prescriptions-box {
+    width: calc(100% - 2rem);
+    display: flex;
+    flex-direction: column;
+    .prescription-item {
+      box-shadow: 0px 0px 1px 1px gray;
+      display: flex;
+      flex-wrap: wrap;
+      border-radius: 1em;
+      margin: 5px 0;
+      max-width: 31rem;
+      .prescription-header {
+        position: relative;
+        width: 100%;
+        padding: 0;
+        button {
+          position: absolute;
+          right: 0;
+        }
+      }
+      .medicine-list {
+        padding: 0;
+        margin: 0;
+        ul,
+        li {
+          padding: 0px 15px;
+          margin: 8px 0px;
+        }
+      }
+    }
+    .prescription-form-box {
+      display: flex;
+      max-width: 31rem;
+      button {
+        margin: 2px 0px 2px 5px;
+      }
+      .prescritpion-form {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        input {
+          width: 100%;
+        }
+        div {
+          padding: 2px 0px;
+        }
+      }
+      .new-prescription {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        padding: 0px;
+        min-height: 100%;
+        width: 100%;
+        box-shadow: 0px 0px 1px 0px gray;
+        margin-left: 20px;
+        /* button {
+          position: absolute;
+          bottom: -15%;
+          right: 40%;
+        } */
+        .send-prescription-btn{
+          flex-grow: 1;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-end;
+          align-items: center;
+        }
+        li {
+          position: relative;
+          width: 100%;
+          padding: 5px 0 5px;
+        }
+        div {
+          padding: 0px 0px 0px 10px;
+        }
+      }
+    }
+  }
+
+  .messages-box {
+    width: calc(100% - 2rem);
+    .chatbox {
+      box-shadow: 0px 0px 1px 1px gray;
+      border-radius: 1em;
+      display: flex;
+      flex-direction: column-reverse;
+      overflow: auto;
+      max-width: 31rem;
+      max-height: 18rem;
+      .message-line {
+        padding: 0;
+        margin: 5px 0 5px;
+        display: flex;
+        width: 100%;
+        justify-content: flex-start;
+        .message {
+          span {
+            font-size: 0.9rem;
+            padding: 5px 5px 0 5px;
+          }
+          background-color: rgb(245, 245, 245);
+          box-shadow: 0px 0px 1px 0px gray;
+          padding: 0px;
+          border-radius: 1em;
+          div {
+            padding: 10px;
+          }
+        }
+      }
+      .my-message {
+        justify-content: flex-end;
+        .message {
+          background-color: white;
+        }
+      }
+    }
+  }
+  .send-message-box {
+    form {
+      width: calc(100% - 2rem);
+      display: flex;
+      input {
+        flex-grow: 1;
+      }
+    }
   }
 `;

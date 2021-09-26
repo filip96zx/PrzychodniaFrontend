@@ -37,6 +37,7 @@ const App = () => {
     <Router>
       <Navbar hasRole={hasRole}></Navbar>
       <Container>
+        <div className="card">
         <Switch>
           <Route exact path='/'>
             <HomePage />
@@ -56,6 +57,7 @@ const App = () => {
           </Route>
           <Route path='/login'>{isLogged ? <Redirect push to='/' /> : <LoginPage />}</Route>
         </Switch>
+        </div>
       </Container>
     </Router>
   );

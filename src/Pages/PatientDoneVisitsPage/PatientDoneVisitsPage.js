@@ -52,7 +52,7 @@ const PatientDoneVisitsPage = () => {
             <th>Lekarz</th>
             <th>Termin</th>
             <th>Godzina</th>
-            <th>status</th>
+            <th>Status</th>
             <th></th>
             </tr>
         </thead>

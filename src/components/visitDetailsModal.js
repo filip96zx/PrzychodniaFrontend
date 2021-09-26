@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { VisitDetailModalComponent } from './styles/visitDetailsModal.Style';
 import visitStatuses from '../helpers/visitStatusConst';
+import doctorService from '../services/doctor.service';
+import patientService from '../services/patient.service';
 
 const navigationItems = [
   { name: 'general', info: 'Informacje' },
@@ -12,9 +14,27 @@ const navigationItems = [
 const VisitDetailsModal = ({ closeModal, visit, isDoctor, cancelReservation, finishVisit, cancelVisit }) => {
   const [navigation, setNavigation] = useState({ general: true, findings: false, prescriptions: false, messages: false });
   const [showInfo, setShowInfo] = useState(false);
+  const [messages, setMessages] = useState([]);
+  const [messageInput, setMessageInput] = useState('');
+
+  const [prescriptions, setPrescriptions] = useState([]);
+
+  const [medicineInput, setMedicineInput] = useState('');
+  const [dosageInput, setDosageInput] = useState('');
+  const [prescriptionNumber, setPrescriptionNumber] = useState('');
+  const [medicineList, setMedicineList] = useState([]);
+  const [prescriptionCode, setPrescriptionCode] = useState('');
+  const [prescriptionErrorMessage, setPrescriptionErrorMessage] = useState('');
+  const [showPrescriptionForm, setShowPrescriptionForm] = useState(false);
 
   const handleNavigation = (navElement) => {
     const nav = { general: false, findings: false, prescriptions: false, messages: false };
+    if (navElement === 'messages') {
+      getMessages();
+    }
+    if (navElement === 'prescriptions') {
+      getPrescritpions();
+    }
     setNavigation({ ...nav, [navElement]: true });
   };
 
@@ -40,6 +60,143 @@ const VisitDetailsModal = ({ closeModal, visit, isDoctor, cancelReservation, fin
     const data = { visitId: visit.visitId };
     if (cancelVisit) {
       cancelVisit(data);
+    }
+  };
+
+  const getMessages = () => {
+    let messages = [];
+    if (isDoctor) {
+      const data = { visitId: visit.visitId };
+      doctorService
+        .getMessages(data)
+        .then((response) => {
+          messages = response.value.map((message) => JSON.parse(message));
+          messages.sort((a, b) => (a.date < b.date ? 1 : -1));
+          setMessages(messages);
+        })
+        .catch((err) => err);
+    } else {
+      const data = { visitId: visit.visitId, doctorId: String(visit.doctorId) };
+      patientService
+        .getMessages(data)
+        .then((response) => {
+          messages = response.value.map((message) => JSON.parse(message));
+          messages.sort((a, b) => (a.date < b.date ? 1 : -1));
+          setMessages(messages);
+        })
+        .catch((err) => err);
+    }
+  };
+
+  const returnMessageClass = (msgType) => {
+    if (isDoctor) {
+      return msgType === 'doctor' ? 'message-line my-message' : 'message-line';
+    } else {
+      return msgType === 'doctor' ? 'message-line' : 'message-line my-message';
+    }
+  };
+
+  const handleSendMessage = (e) => {
+    e.preventDefault();
+    if (messageInput === '') return;
+
+    let messages = [];
+    if (isDoctor) {
+      const data = { visitId: visit.visitId, message: messageInput };
+      setMessageInput('');
+      doctorService
+        .sendMessage(data)
+        .then((response) => {
+          messages = response.value.map((message) => JSON.parse(message));
+          messages.sort((a, b) => (a.date < b.date ? 1 : -1));
+          setMessages(messages);
+        })
+        .catch((err) => err);
+    } else {
+      const data = { visitId: visit.visitId, message: messageInput, doctorId: String(visit.doctorId) };
+      setMessageInput('');
+      patientService
+        .sendMessage(data)
+        .then((response) => {
+          messages = response.value.map((message) => JSON.parse(message));
+          messages.sort((a, b) => (a.date < b.date ? 1 : -1));
+          setMessages(messages);
+        })
+        .catch((err) => err);
+    }
+  };
+
+  const handleShowPrescritpion = (number) => {
+    let list = [...prescriptions];
+    let toShow = list.find((x) => x.number === number);
+    toShow.showDetails = !toShow.showDetails;
+    list = list.filter((x) => x.number !== number);
+    list = [...list, toShow].sort((a, b) => (a.number > b.number ? 1 : -1));
+    setPrescriptions(list);
+  };
+
+  const handleAddMedicine = (e) => {
+    e.preventDefault();
+    if (dosageInput !== '' && medicineInput !== '') {
+      setPrescriptionErrorMessage('');
+      setMedicineList([...medicineList, { id: medicineList.length, name: medicineInput, dosage: dosageInput }]);
+      setDosageInput('');
+      setMedicineInput('');
+    }
+  };
+  const handleDeleteMedicine = (id) => {
+    setMedicineList(medicineList.filter((x) => x.id !== id));
+  };
+
+  const handleSendPrescription = () => {
+    if (medicineList.length === 0) {
+      setPrescriptionErrorMessage('Uzupełnij listę leków');
+    } else if (prescriptionCode === '') {
+      setPrescriptionErrorMessage('Wpisz kod recepty');
+    } else {
+      const medicines = medicineList.map((x) => ({ name: x.name, dosage: x.dosage }));
+      const prescription = { code: prescriptionCode, medicines: medicines };
+      const data = { visitId: visit.visitId, prescription: JSON.stringify(prescription) };
+      doctorService
+        .sendPrescription(data)
+        .then((response) => {
+          loadPrescriptions(response.value);
+        })
+        .catch((err) => console.log(err));
+    }
+  };
+
+  const getPrescritpions = () => {
+    if (isDoctor) {
+      const data = { visitId: visit.visitId };
+      doctorService
+        .getPrescritpions(data)
+        .then((response) => {
+          loadPrescriptions(response.value);
+        })
+        .catch((err) => err);
+    } else {
+      const data = { visitId: visit.visitId , doctorId:String(visit.doctorId)};
+      patientService
+        .getPrescritpions(data)
+        .then((response) => {
+          loadPrescriptions(response.value);
+        })
+        .catch((err) => err);
+    }
+  };
+
+  const loadPrescriptions = (list) => {
+    const prescList = list.map((x) => JSON.parse(x));
+    setPrescriptions(prescList);
+  };
+
+  const handleDeletePrescription = (prescNumber)=>{
+    if(isDoctor){
+      const data = { visitId: visit.visitId, prescriptionNumber: prescNumber}
+      doctorService.deletePrescription(data).then(response =>{
+        loadPrescriptions(response.value)
+      }).catch(err=>err);
     }
   };
 
@@ -132,8 +289,120 @@ const VisitDetailsModal = ({ closeModal, visit, isDoctor, cancelReservation, fin
             </>
           )}
           {navigation.findings && <h3>Wyniki badań</h3>}
-          {navigation.prescriptions && <h3>Recepty</h3>}
-          {navigation.messages && <h3>Wiadomości</h3>}
+          {navigation.prescriptions && (
+            <div className='prescriptions-box'>
+              <h3>Recepty</h3>
+              {prescriptions.map((item) => (
+                <div key={item.number} className='prescription-item'>
+                  <div className='prescription-header'>
+                    {'Kod recepty: '}
+                    {item.code}
+                    <button onClick={() => handleShowPrescritpion(item.number)}>{item.showDetails ? 'ukryj' : 'pokaż'}</button>
+                  </div>
+                  {item.showDetails && (
+                    <div className='medicine-list'>
+                      <ul>
+                        {item.medicines.map((med) => (
+                          <li key={med.name+med.dosage}>
+                            {'Lek: '}
+                            <strong>{med.name}</strong>
+                            {', dawkowanie: '}
+                            {med.dosage}
+                          </li>
+                        ))}
+                      </ul>
+                      {isDoctor && <button onClick={()=> handleDeletePrescription(item.number)}>usuń receptę</button>}
+                    </div>
+                  )}
+                </div>
+              ))}
+              {isDoctor && <button onClick={()=>setShowPrescriptionForm(!showPrescriptionForm)}>{!showPrescriptionForm? 'Nowa recepta':'Ukryj'}</button>}
+              {(isDoctor && showPrescriptionForm) &&
+              <div className='prescription-form-box'>
+                <form className='prescritpion-form'>
+                  <div>
+                    <label>
+                      {'Kod recepty: '}
+                      <input type='text' onChange={(e) => setPrescriptionNumber(e.target.value)} value={prescriptionNumber} />
+                    </label>
+                  </div>
+                  <button
+                    type='button'
+                    onClick={() => {
+                      setPrescriptionCode(prescriptionNumber);
+                      setPrescriptionNumber('');
+                      setPrescriptionErrorMessage('');
+                    }}
+                  >
+                    zapisz kod
+                  </button>
+                  <div>
+                    <label>
+                      {'lek: '}
+                      <input type='text' maxLength='25' onChange={(e) => setMedicineInput(e.target.value)} value={medicineInput} />
+                    </label>
+                  </div>
+                  <div>
+                    <label>
+                      {' dawkowanie: '}
+                      <input type='text' maxLength='30' onChange={(e) => setDosageInput(e.target.value)} value={dosageInput} />
+                    </label>
+                  </div>
+                  <button type='submit' onClick={(e) => handleAddMedicine(e)}>
+                    dodaj
+                  </button>
+                </form>
+                <div className='new-prescription'>
+                  <div>
+                    {'Kod recepty: '}
+                    {prescriptionCode}
+                  </div>
+                  <ul>
+                    {medicineList?.map((x) => (
+                      <li key={x.id}>
+                        <button
+                          onClick={() => {
+                            handleDeleteMedicine(x.id);
+                          }}
+                        >
+                          usuń
+                        </button>
+                        {' ' + x.name + ', ' + x.dosage}
+                      </li>
+                    ))}
+                  </ul>
+                  <div className='send-prescription-btn'>
+                    {prescriptionErrorMessage !== '' ? <div>{prescriptionErrorMessage}</div> : null}
+                    <button onClick={handleSendPrescription}>Wyślij</button>
+                  </div>
+                </div>
+              </div>
+              
+            }
+            </div>
+          )}
+          {navigation.messages && (
+            <div className='messages-box'>
+              <h3>Wiadomości</h3>
+              <div className='chatbox'>
+                {messages.length === 0 ? 'brak wiadomości' : null}
+                {messages.map((msg) => (
+                  <div key={msg.date} className={returnMessageClass(msg.type)}>
+                    <div className='message'>
+                      <span>{msg.date}</span>
+                      <div>{msg.message}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className='send-message-box'>
+                <form>
+                  <input type='text-area' maxLength='300' onChange={(e) => setMessageInput(e.target.value)} value={messageInput} />
+                  <button onClick={handleSendMessage}>wyślij</button>
+                </form>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </VisitDetailModalComponent>

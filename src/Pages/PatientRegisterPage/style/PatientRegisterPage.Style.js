@@ -38,7 +38,7 @@ export const PatientRegisterPageComponent = styled.div`
     }
     .day-header {
       font-size: 1.8rem;
-      border-bottom: 2px black solid;
+      //border-bottom: 2px black solid;
       text-align: center;
     }
 

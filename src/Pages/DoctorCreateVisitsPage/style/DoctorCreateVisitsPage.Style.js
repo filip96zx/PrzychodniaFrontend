@@ -5,6 +5,7 @@ export const DoctorCreateVisitsComponent = styled.div`
   width: 100%;
   justify-content: space-evenly;
   flex-wrap: wrap;
+  padding-bottom: 1em;
   div {
     width: 150px;
   }
@@ -40,12 +41,17 @@ export const DoctorCreateVisitsComponent = styled.div`
   .day-header {
     font-size: 1.4rem;
     padding: 0px 5px;
-    border-bottom: 2px black solid;
+    //border-bottom: 2px black solid;
     text-align: center;
   }
 
   div.waiting-visit {
-    background-color: rgba(170, 255, 181, 0.5);
+    //background-color: rgba(170, 255, 181, 0.5);
+    background-color: white;
+  }
+
+  div.reserved-visit {
+    box-shadow: 0px 0px 1px 0px black;
   }
 
   .day-column{
@@ -53,6 +59,7 @@ export const DoctorCreateVisitsComponent = styled.div`
     flex-direction: column;
     flex-grow: 1;
     align-items: center;
+    margin: 0 10px;
   }
 
   .visit-item {

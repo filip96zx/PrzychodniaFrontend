@@ -1,27 +1,26 @@
-import styled from "styled-components";
+import styled from 'styled-components';
+import { mainColor } from '../../../globalStyles/styleVariables';
 
 export const PatientDoneVisitComponent = styled.div`
-
-table {
+  margin: 1rem auto;
+  width: fit-content;
+  table {
     border-collapse: collapse;
     margin: 25px 0;
     font-size: 1em;
     font-family: sans-serif;
     min-width: 400px;
     thead tr {
-      background-color: gray;
+      background-color: ${mainColor};
       color: black;
       text-align: left;
     }
-    th, td {
+    th,
+    td {
       padding: 8px 12px;
-    }y
-    tbody tr:nth-of-type(even) {
-    background-color: #f3f3f3;
     }
     tbody tr {
       border-bottom: 1px solid #ddd;
     }
   }
-
 `;

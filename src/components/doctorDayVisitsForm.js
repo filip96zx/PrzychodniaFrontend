@@ -66,6 +66,13 @@ const DoctorDayVisitsForm = ({
     addHourtoList(dayInputsValues[dayProperty]);
   };
 
+  const setItemClass = (visitStatus) =>{
+    if (visitStatus === 0 ) return 'visit-item';
+    if (visitStatus === 5) return 'waiting-visit visit-item';
+    if (visitStatus === 1) return 'reserved-visit visit-item';
+    else return 'visit-item';
+  }
+
   return (
     <>
       <div className='add-visit-box'>
@@ -84,7 +91,7 @@ const DoctorDayVisitsForm = ({
         </div>
       </div>
       {daysVisits[dayProperty].map((visit) => (
-        <div className={visit.status === 5 ? 'waiting-visit visit-item' : 'visit-item'} key={visit.visitId}>
+        <div className={setItemClass(visit.status)} key={visit.visitId}>
           <div>{visit.time}</div>
           <div>spec. {visit.visitType}</div>
           status: <strong>{visitStatuses[visit.status]}</strong>

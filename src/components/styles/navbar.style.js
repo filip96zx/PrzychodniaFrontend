@@ -1,11 +1,13 @@
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
+import { mainColor } from '../../globalStyles/styleVariables';
 
 export const NavbarComponent = styled.div`
   position: relative;
   display: flex;
-  height: 3rem;
-  box-shadow: 0 4px 2px -2px orange;
+  height: 2rem;
+  box-shadow: 0 4px 2px -3px ${mainColor};
+  background-image: linear-gradient(190deg, ${mainColor} 0%, rgba(255,255,255,1) 100%);
   
 `;
 
@@ -16,14 +18,17 @@ export const StyledNavLink = styled(NavLink)`
   height: 100%;
   color: black;
   align-items: center;
+  font-size: 1.2rem;
   padding: 0 5px;
   transition: .2s;
+  font-weight: 600;
+  margin-right: 15px ;
   &.active{
     color: white;
-    background-color: orange;
+    background-color: ${mainColor};
   }
   :hover{
-    background-color: #ccc;
+    background-color: rgba(0, 104, 255, 0.79);
   }
 
 `;

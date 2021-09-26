@@ -88,6 +88,33 @@ const getVisitDetails = (data) => {
   return fetch(`${config.apiURL}/patient/getvisitdetails`, requestOptions).then(handleResponse);
 };
 
+const getMessages = (data) => {
+  const requestOptions = {
+    method: 'POST',
+    headers: { ...authHeader(), 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify(data),
+  };
+  return fetch(`${config.apiURL}/patient/getmessages`, requestOptions).then(handleResponse);
+};
+const sendMessage = (data) => {
+  const requestOptions = {
+    method: 'POST',
+    headers: { ...authHeader(), 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify(data),
+  };
+  return fetch(`${config.apiURL}/patient/sendmessage`, requestOptions).then(handleResponse);
+};
+const getPrescritpions = (data) => {
+  const requestOptions = {
+    method: 'POST',
+    headers: { ...authHeader(), 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify(data),
+  };
+  return fetch(`${config.apiURL}/patient/getprescritpions`, requestOptions).then(handleResponse);
+};
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
@@ -99,5 +126,8 @@ export default {
   getRegisteredVisits,
   getDoneVisits,
   getVisitDetails,
-  cancelVisitRegistration
+  cancelVisitRegistration,
+  getMessages,
+  sendMessage,
+  getPrescritpions
 };

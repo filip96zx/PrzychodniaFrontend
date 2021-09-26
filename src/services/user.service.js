@@ -89,6 +89,35 @@ const updateUser = (data) => {
   return fetch(`${config.apiURL}/users/updateuser`, requestOptions).then(handleResponse);
 };
 
+const getSpecialisations = () => {
+  const requestOptions = { method: 'GET', headers: authHeader(), credentials: 'include' };
+  return fetch(`${config.apiURL}/admin/getspecialisations`, requestOptions).then(handleResponse);
+};
+
+const getRemovableSpecialisations = () => {
+  const requestOptions = { method: 'GET', headers: authHeader(), credentials: 'include' };
+  return fetch(`${config.apiURL}/admin/getremovablespecialisations`, requestOptions).then(handleResponse);
+};
+
+const deleteSpecialisation = (data) => {
+  const requestOptions = {
+    method: 'POST',
+    headers: {  ...authHeader(), 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+    credentials: 'include',
+  };
+  return fetch(`${config.apiURL}/admin/deletespecialisation`, requestOptions).then(handleResponse);
+};
+const addSpecialisation = (data) => {
+  const requestOptions = {
+    method: 'POST',
+    headers: {  ...authHeader(), 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+    credentials: 'include',
+  };
+  return fetch(`${config.apiURL}/admin/createspecialisation`, requestOptions).then(handleResponse);
+};
+
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   getUserListPaginated,
@@ -102,4 +131,8 @@ export default {
   addRoleToUser,
   deleteRoleFromUser,
   updateUser,
+  getSpecialisations,
+  getRemovableSpecialisations,
+  addSpecialisation,
+  deleteSpecialisation
 };
