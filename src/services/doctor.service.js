@@ -119,7 +119,34 @@ const deletePrescription = (data) => {
   };
   return fetch(`${config.apiURL}/doctor/deleteprescritpion`, requestOptions).then(handleResponse);
 };
+const sendFinding = (data) => {
+  const requestOptions = {
+    method: 'POST',
+    headers: { ...authHeader(), 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify(data),
+  };
+  return fetch(`${config.apiURL}/doctor/sendfinding`, requestOptions).then(handleResponse);
+};
 
+const getFindings = (data) => {
+  const requestOptions = {
+    method: 'POST',
+    headers: { ...authHeader(), 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify(data),
+  };
+  return fetch(`${config.apiURL}/doctor/getfindings`, requestOptions).then(handleResponse);
+};
+const deleteFinding = (data) => {
+  const requestOptions = {
+    method: 'POST',
+    headers: { ...authHeader(), 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify(data),
+  };
+  return fetch(`${config.apiURL}/doctor/deletefinding`, requestOptions).then(handleResponse);
+};
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   getVisitsInWeek,
@@ -133,5 +160,8 @@ export default {
   sendMessage,
   sendPrescription,
   getPrescritpions,
-  deletePrescription
+  deletePrescription,
+  sendFinding,
+  getFindings,
+  deleteFinding
 };

@@ -5,6 +5,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import UserEditModal from '../../components/userEditModal';
 import handleResponse from '../../helpers/handle-response';
 import { UserListComponent } from './style/UserListPage.style';
+import { countryList } from '../../helpers/countriesConst';
 
 const spinnerDiv = {
   display: 'flex',
@@ -23,7 +24,6 @@ const UserListPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [userData, setUserData] = useState({});
-  const [countries, setCountries] = useState();
   const [roles, setRoles] = useState();
   const [reloadUsers, setReloadUsers] = useState(false);
   const [searchString, setSearchString] = useState('');
@@ -33,10 +33,12 @@ const UserListPage = () => {
   const [specialisationToAdd, setSpecialisationToAdd] = useState('');
 
   useEffect(() => {
-    getCountries();
     loadSpecialisations();
     loadRemovableSpecialisations();
-    userService.getRoles().then((response) => setRoles(response.value)).catch(err =>err);
+    userService
+      .getRoles()
+      .then((response) => setRoles(response.value))
+      .catch((err) => err);
   }, []);
 
   useEffect(() => {
@@ -49,7 +51,7 @@ const UserListPage = () => {
           setTotalCount(response.totalCount);
           setIsLoading(false);
         })
-        .catch(err => err);
+        .catch((err) => err);
     } else {
       userService
         .getUserListPaginated(pageIndex, pageSize)
@@ -58,7 +60,7 @@ const UserListPage = () => {
           setTotalCount(response.totalCount);
           setIsLoading(false);
         })
-        .catch(err=> err);
+        .catch((err) => err);
     }
   }, [pageIndex, pageSize, reloadUsers, searchString]);
 
@@ -117,52 +119,52 @@ const UserListPage = () => {
     });
   };
 
-  const getCountries = () => {
-    const countries = [''];
-    fetch('https://restcountries.eu/rest/v2/all', { method: 'GET' })
-      .then(handleResponse)
-      .then((country) => {
-        country.map((country) => countries.push(country.name));
-        setCountries(countries);
-      });
-  };
-
   const handleSearch = (e) => {
     setSearchString(e.target.value);
   };
 
   const loadSpecialisations = () => {
-    userService.getSpecialisations().then(response => {
-      setSpecialisations(response.value);
-    }
-      ).catch(err => err);
-  }
+    userService
+      .getSpecialisations()
+      .then((response) => {
+        setSpecialisations(response.value);
+      })
+      .catch((err) => err);
+  };
 
   const loadRemovableSpecialisations = () => {
-    userService.getRemovableSpecialisations().then(response => {
-      setRemovableSpecialisations(response.value);
-    }
-      ).catch(err => err);
-  }
+    userService
+      .getRemovableSpecialisations()
+      .then((response) => {
+        setRemovableSpecialisations(response.value);
+      })
+      .catch((err) => err);
+  };
 
   const handleAddSpecialisation = () => {
-    if(specialisationToAdd !== ''){
-      const data = {roleName: specialisationToAdd}
-      userService.addSpecialisation(data).then(reponse => {
-        loadSpecialisations();
-        loadRemovableSpecialisations();
-      }).catch(err => err)
+    if (specialisationToAdd !== '') {
+      const data = { roleName: specialisationToAdd };
+      userService
+        .addSpecialisation(data)
+        .then((reponse) => {
+          loadSpecialisations();
+          loadRemovableSpecialisations();
+        })
+        .catch((err) => err);
     }
-  }
+  };
   const handleDeleteSpecialisation = () => {
-    if(specialisationToDelete !== ''){
-      const data = {roleName: specialisationToDelete}
-      userService.deleteSpecialisation(data).then(reponse => {
-        loadSpecialisations();
-        loadRemovableSpecialisations();
-      }).catch(err => err)
+    if (specialisationToDelete !== '') {
+      const data = { roleName: specialisationToDelete };
+      userService
+        .deleteSpecialisation(data)
+        .then((reponse) => {
+          loadSpecialisations();
+          loadRemovableSpecialisations();
+        })
+        .catch((err) => err);
     }
-  }
+  };
 
   return (
     <UserListComponent>
@@ -170,63 +172,71 @@ const UserListPage = () => {
         <input type='text' onChange={handleSearch} placeholder='szukaj' />
       </div>
       <div>
-      <table>
-        <thead>
-          <tr>
-            <th>id</th>
-            <th>Imię</th>
-            <th>Nazwisko</th>
-            <th>Email</th>
-            <th>Numer Telefonu</th>
-            <th>Role</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {isLoading && (
+        <table>
+          <thead>
             <tr>
-              <td colSpan='6'>
-                <div style={spinnerDiv}>
-                  <Spinner color='gray' backgroundColor='white' />
-                </div>
-              </td>
+              <th>id</th>
+              <th>Imię</th>
+              <th>Nazwisko</th>
+              <th>Email</th>
+              <th>Numer Telefonu</th>
+              <th>Role</th>
+              <th></th>
             </tr>
-          )}
-          {users ? users : null}
-        </tbody>
-      </table>
-      <div className='pagination-element'>
-        <button onClick={prevPage}>&lt;</button>
-        <button onClick={nextPage}>&gt;</button>
-        <select onChange={handleSetPageSize} value={pageSize}>
-          <option value={5}>5</option>
-          <option value={10}>10</option>
-          <option value={20}>20</option>
-        </select>
-        <span>
-          strona: {pageIndex * 1 + 1} z {Math.ceil(totalCount / pageSize)}
-        </span>
-      </div>
-      </div>
-      <div className="role-manage-box">
-        <div><strong>lista specjalizacji</strong></div>
-        <div>{specialisations.map(x => x + ' ')}</div>
-        <label >
-          Dodaj specjalizację: <input type="text" value={specialisationToAdd} onChange={(e)=>setSpecialisationToAdd(e.target.value)}/>
-        </label>
-            <button onClick={handleAddSpecialisation}>dodaj</button>
-        <label >
-          Usuń specjalizację: 
-          <select value={specialisationToDelete} onChange={(e)=>setSpecialisationToDelete(e.target.value)}>
-            <option value={''}> </option>
-            {removableSpecialisations.map(spec =>
-              <option key={spec} value={spec}>{spec}</option>
-              )}
+          </thead>
+          <tbody>
+            {isLoading && (
+              <tr>
+                <td colSpan='6'>
+                  <div style={spinnerDiv}>
+                    <Spinner color='gray' backgroundColor='white' />
+                  </div>
+                </td>
+              </tr>
+            )}
+            {users ? users : null}
+          </tbody>
+        </table>
+        <div className='pagination-element'>
+          <button onClick={prevPage}>&lt;</button>
+          <button onClick={nextPage}>&gt;</button>
+          <select onChange={handleSetPageSize} value={pageSize}>
+            <option value={5}>5</option>
+            <option value={10}>10</option>
+            <option value={20}>20</option>
           </select>
-        </label>
-        <button onClick={handleDeleteSpecialisation}>usuń</button>
+          <span>
+            strona: {pageIndex * 1 + 1} z {Math.ceil(totalCount / pageSize)}
+          </span>
+        </div>
       </div>
-      {showModal && <UserEditModal closeModal={handleCloseModal} countries={countries} user={userData} roles={roles} reload={reloadUsers} reloadUsers={setReloadUsers} />}
+      <div className='role-manage-box'>
+        <div>
+          <strong>lista specjalizacji</strong>
+          <p>{specialisations.map((x) => x + ', ')}</p>
+        </div>
+        <div>
+          <label>
+            Dodaj specjalizację: <input type='text' value={specialisationToAdd} onChange={(e) => setSpecialisationToAdd(e.target.value)} />
+          </label>
+          <button onClick={handleAddSpecialisation}>dodaj</button>
+        </div>
+        <div>
+          <label>
+            {'Usuń specjalizację: '}
+            <select value={specialisationToDelete} onChange={(e) => setSpecialisationToDelete(e.target.value)}>
+              <option value={''}> </option>
+              {removableSpecialisations.map((spec) => (
+                <option key={spec} value={spec}>
+                  {spec}
+                </option>
+              ))}
+            </select>
+          </label>
+          <button onClick={handleDeleteSpecialisation}>usuń</button>
+        </div>
+      </div>
+      {showModal && <UserEditModal closeModal={handleCloseModal} user={userData} roles={roles} reload={reloadUsers} reloadUsers={setReloadUsers} />}
     </UserListComponent>
   );
 };

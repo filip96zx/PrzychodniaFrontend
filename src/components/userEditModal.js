@@ -7,6 +7,7 @@ import handleResponse from '../helpers/handle-response';
 import * as Yup from 'yup';
 import { FormComponent } from './styles/form.style';
 import userService from '../services/user.service';
+import { countryList } from '../helpers/countriesConst';
 
 const requiredWarrning = 'To pole jest wymagane';
 
@@ -16,7 +17,7 @@ const checkProperty = (property, type) => {
 };
 const succeddStyle = { color: 'green' };
 
-const UserEditModal = ({ closeModal, user, countries, roles, reloadUsers, reload }) => {
+const UserEditModal = ({ closeModal, user, roles, reloadUsers, reload }) => {
   const validationSchema = Yup.object().shape({
     name: Yup.string().required(requiredWarrning).default(checkProperty(user.name, 'string')),
     surname: Yup.string().required(requiredWarrning).default(checkProperty(user.surname, 'string')),
@@ -161,7 +162,7 @@ const UserEditModal = ({ closeModal, user, countries, roles, reloadUsers, reload
                 <label>
                   Kraj
                   <select name='country' {...register('country')}>
-                    {countries?.map((country) => (
+                    {countryList.map((country) => (
                       <option key={country} value={country}>
                         {country}
                       </option>

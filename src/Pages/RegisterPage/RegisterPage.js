@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import { FormComponent } from '../../components/styles/form.style';
 import { Spinner } from '../../components/styles/spinner.style';
 import userService from '../../services/user.service';
+import { countryList } from '../../helpers/countriesConst';
 
 const StyledSpinner = styled(Spinner)`
   position: absolute;
@@ -43,23 +44,9 @@ const RegisterPage = () => {
 
   const [isloading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const [countries, setCountries] = useState();
   const [succeed, setSucceed] = useState(false);
   const history = useHistory();
 
-  useEffect(() => {
-    getCountries();
-  }, []);
-
-  const getCountries = () => {
-    const countries = [''];
-    fetch('https://restcountries.eu/rest/v2/all', { method: 'GET' })
-      .then(handleResponse)
-      .then((country) => {
-        country.map((country) => countries.push(country.name));
-        setCountries(countries);
-      });
-  };
 
   const onSubmit = (data) => {
     setIsLoading(true);
@@ -135,7 +122,7 @@ const RegisterPage = () => {
           <label>
             Kraj
             <select name='country' {...register('country')}>
-              {countries?.map((country) => (
+              {countryList.map((country) => (
                 <option key={country} value={country}>
                   {country}
                 </option>

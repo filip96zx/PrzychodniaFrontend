@@ -115,6 +115,15 @@ const getPrescritpions = (data) => {
   };
   return fetch(`${config.apiURL}/patient/getprescritpions`, requestOptions).then(handleResponse);
 };
+const getFindings = (data) => {
+  const requestOptions = {
+    method: 'POST',
+    headers: { ...authHeader(), 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify(data),
+  };
+  return fetch(`${config.apiURL}/patient/getfindings`, requestOptions).then(handleResponse);
+};
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
@@ -129,5 +138,6 @@ export default {
   cancelVisitRegistration,
   getMessages,
   sendMessage,
-  getPrescritpions
+  getPrescritpions,
+  getFindings
 };

@@ -18,6 +18,7 @@ const VisitDetailsModal = ({ closeModal, visit, isDoctor, cancelReservation, fin
   const [messageInput, setMessageInput] = useState('');
 
   const [prescriptions, setPrescriptions] = useState([]);
+  const [findings, setFindings] = useState([]);
 
   const [medicineInput, setMedicineInput] = useState('');
   const [dosageInput, setDosageInput] = useState('');
@@ -27,6 +28,11 @@ const VisitDetailsModal = ({ closeModal, visit, isDoctor, cancelReservation, fin
   const [prescriptionErrorMessage, setPrescriptionErrorMessage] = useState('');
   const [showPrescriptionForm, setShowPrescriptionForm] = useState(false);
 
+  const [findingTitleInput, setFindingTitleInput] = useState('');
+  const [findingDescriptionInput, setFindingDescriptionInput] = useState('');
+  const [findingErrorMessage, setFindingErrorMessage] = useState('');
+  const [showFindingForm, setShowFindingForm] = useState(false);
+
   const handleNavigation = (navElement) => {
     const nav = { general: false, findings: false, prescriptions: false, messages: false };
     if (navElement === 'messages') {
@@ -34,6 +40,9 @@ const VisitDetailsModal = ({ closeModal, visit, isDoctor, cancelReservation, fin
     }
     if (navElement === 'prescriptions') {
       getPrescritpions();
+    }
+    if (navElement === 'findings') {
+      getFindings();
     }
     setNavigation({ ...nav, [navElement]: true });
   };
@@ -135,6 +144,15 @@ const VisitDetailsModal = ({ closeModal, visit, isDoctor, cancelReservation, fin
     setPrescriptions(list);
   };
 
+  const handleShowFindings = (number) => {
+    let list = [...findings];
+    let toShow = list.find((x) => x.number === number);
+    toShow.showDetails = !toShow.showDetails;
+    list = list.filter((x) => x.number !== number);
+    list = [...list, toShow].sort((a, b) => (a.number > b.number ? 1 : -1));
+    setFindings(list);
+  };
+
   const handleAddMedicine = (e) => {
     e.preventDefault();
     if (dosageInput !== '' && medicineInput !== '') {
@@ -157,6 +175,8 @@ const VisitDetailsModal = ({ closeModal, visit, isDoctor, cancelReservation, fin
       const medicines = medicineList.map((x) => ({ name: x.name, dosage: x.dosage }));
       const prescription = { code: prescriptionCode, medicines: medicines };
       const data = { visitId: visit.visitId, prescription: JSON.stringify(prescription) };
+      setPrescriptionCode('');
+      setMedicineList([]);
       doctorService
         .sendPrescription(data)
         .then((response) => {
@@ -174,11 +194,36 @@ const VisitDetailsModal = ({ closeModal, visit, isDoctor, cancelReservation, fin
         .then((response) => {
           loadPrescriptions(response.value);
         })
-        .catch((err) => err);
+        .catch((err) => {
+          setPrescriptions([]);
+        });
     } else {
-      const data = { visitId: visit.visitId , doctorId:String(visit.doctorId)};
+      const data = { visitId: visit.visitId, doctorId: String(visit.doctorId) };
       patientService
         .getPrescritpions(data)
+        .then((response) => {
+          loadPrescriptions(response.value);
+        })
+        .catch((err) => {
+          setPrescriptions([]);
+        });
+    }
+  };
+
+  const loadPrescriptions = (list) => {
+    if(list.length === 0 ){
+      setPrescriptions([]);
+      return;
+    }
+    const prescList = list?.map((x) => JSON.parse(x));
+    setPrescriptions(prescList);
+  };
+
+  const handleDeletePrescription = (prescNumber) => {
+    if (isDoctor) {
+      const data = { visitId: visit.visitId, prescriptionNumber: prescNumber };
+      doctorService
+        .deletePrescription(data)
         .then((response) => {
           loadPrescriptions(response.value);
         })
@@ -186,17 +231,70 @@ const VisitDetailsModal = ({ closeModal, visit, isDoctor, cancelReservation, fin
     }
   };
 
-  const loadPrescriptions = (list) => {
-    const prescList = list.map((x) => JSON.parse(x));
-    setPrescriptions(prescList);
+  const handleSendFinding = (e) => {
+    e.preventDefault();
+    if (findingTitleInput === '') {
+      setFindingErrorMessage('Wpisz nazwę badania');
+    } else if (findingDescriptionInput === '') {
+      setFindingErrorMessage('Wpisz opis badania');
+    } else {
+      const finding = { title: findingTitleInput, description: findingDescriptionInput };
+      const data = { visitId: visit.visitId, finding: JSON.stringify(finding) };
+      setFindingErrorMessage('');
+      setFindingTitleInput('');
+      setFindingDescriptionInput('');
+      doctorService
+        .sendFinding(data)
+        .then((response) => {
+          loadFindings(response.value);
+        })
+        .catch((err) => err);
+    }
   };
 
-  const handleDeletePrescription = (prescNumber)=>{
-    if(isDoctor){
-      const data = { visitId: visit.visitId, prescriptionNumber: prescNumber}
-      doctorService.deletePrescription(data).then(response =>{
-        loadPrescriptions(response.value)
-      }).catch(err=>err);
+  const loadFindings = (list) => {
+    if(list.length === 0 ){
+      setFindings([]);
+      return;
+    }
+    const findings = list.map((x) => JSON.parse(x));
+    setFindings(findings);
+  };
+
+  const getFindings = () => {
+    if (isDoctor) {
+      const data = { visitId: visit.visitId };
+      doctorService
+        .getFindings(data)
+        .then((response) => {
+          loadFindings(response.value);
+        })
+        .catch((err) => {
+          setFindings([]);
+        });
+    } else {
+      const data = { visitId: visit.visitId, doctorId: String(visit.doctorId) };
+      patientService
+        .getFindings(data)
+        .then((response) => {
+          loadFindings(response.value);
+        })
+        .catch((err) => {
+          setFindings([]);
+        });
+    }
+  };
+
+  const handleDeleteFinding = (findingNumber) => {
+    if (isDoctor) {
+      const data = { visitId: visit.visitId, findingNumber: findingNumber };
+      console.log(data);
+      doctorService
+        .deleteFinding(data)
+        .then((response) => {
+          loadFindings(response.value);
+        })
+        .catch((err) => err);
     }
   };
 
@@ -224,7 +322,7 @@ const VisitDetailsModal = ({ closeModal, visit, isDoctor, cancelReservation, fin
         </nav>
         <div className='content-box'>
           {navigation.general && (
-            <>
+            <div className='general-box'>
               <h3>Informacje</h3>
               <div>
                 <div>specjalizacja: {visit.visitType}</div>
@@ -286,13 +384,59 @@ const VisitDetailsModal = ({ closeModal, visit, isDoctor, cancelReservation, fin
                 {isDoctor && visit.visitStatus === 1 && <button onClick={handleFinishVisit}>Zakończ wizytę</button>}
                 {isDoctor && visit.visitStatus === 1 && <button onClick={handleCancelVisit}>Odwołaj wizytę</button>}
               </div>
-            </>
+            </div>
           )}
-          {navigation.findings && <h3>Wyniki badań</h3>}
+          {navigation.findings && (
+            <div className='findings-box'>
+              <h3>Wyniki badań</h3>
+              {findings?.map((item) => (
+                <div key={item.number} className='finding-item'>
+                  <div className='prescription-header'>
+                    <strong>{item.title}</strong>
+                    <button onClick={() => handleShowFindings(item.number)}>{item.showDetails ? 'ukryj' : 'pokaż'}</button>
+                  </div>
+                  {item.showDetails && (
+                    <div className='finding-description'>
+                      szczegóły:
+                      <p>{item.description}</p>
+                      {isDoctor && <button onClick={()=>handleDeleteFinding(item.number)}>usuń badanie</button>}
+                    </div>
+                  )}
+                </div>
+              ))}
+              {isDoctor && (
+                <button className='new-finding-btn' onClick={() => setShowPrescriptionForm(!showPrescriptionForm)}>
+                  {!showPrescriptionForm ? 'Nowe badanie' : 'ukryj'}
+                </button>
+              )}
+              {isDoctor && showPrescriptionForm && (
+                <form className='new-finding-box'>
+                  <div>
+                    <label>
+                      Badanie:
+                      <div>
+                        <input type='text' onChange={(e) => setFindingTitleInput(e.target.value)} value={findingTitleInput} />
+                      </div>
+                    </label>
+                  </div>
+                  <div className='description-box'>
+                    <label>
+                      Opis:
+                      <div>
+                        <input type='text' onChange={(e) => setFindingDescriptionInput(e.target.value)} value={findingDescriptionInput} />
+                      </div>
+                    </label>
+                  </div>
+                  {findingErrorMessage !== '' ? <div>{findingErrorMessage}</div> : null}
+                  <button onClick={(e) => handleSendFinding(e)}>wyślij</button>
+                </form>
+              )}
+            </div>
+          )}
           {navigation.prescriptions && (
             <div className='prescriptions-box'>
               <h3>Recepty</h3>
-              {prescriptions.map((item) => (
+              {prescriptions?.map((item) => (
                 <div key={item.number} className='prescription-item'>
                   <div className='prescription-header'>
                     {'Kod recepty: '}
@@ -303,7 +447,7 @@ const VisitDetailsModal = ({ closeModal, visit, isDoctor, cancelReservation, fin
                     <div className='medicine-list'>
                       <ul>
                         {item.medicines.map((med) => (
-                          <li key={med.name+med.dosage}>
+                          <li key={med.name + med.dosage}>
                             {'Lek: '}
                             <strong>{med.name}</strong>
                             {', dawkowanie: '}
@@ -311,74 +455,73 @@ const VisitDetailsModal = ({ closeModal, visit, isDoctor, cancelReservation, fin
                           </li>
                         ))}
                       </ul>
-                      {isDoctor && <button onClick={()=> handleDeletePrescription(item.number)}>usuń receptę</button>}
+                      {isDoctor && <button onClick={() => handleDeletePrescription(item.number)}>usuń receptę</button>}
                     </div>
                   )}
                 </div>
               ))}
-              {isDoctor && <button onClick={()=>setShowPrescriptionForm(!showPrescriptionForm)}>{!showPrescriptionForm? 'Nowa recepta':'Ukryj'}</button>}
-              {(isDoctor && showPrescriptionForm) &&
-              <div className='prescription-form-box'>
-                <form className='prescritpion-form'>
-                  <div>
-                    <label>
+              {isDoctor && <button onClick={() => setShowPrescriptionForm(!showPrescriptionForm)}>{!showPrescriptionForm ? 'Nowa recepta' : 'Ukryj'}</button>}
+              {isDoctor && showPrescriptionForm && (
+                <div className='prescription-form-box'>
+                  <form className='prescritpion-form'>
+                    <div>
+                      <label>
+                        {'Kod recepty: '}
+                        <input type='text' onChange={(e) => setPrescriptionNumber(e.target.value)} value={prescriptionNumber} />
+                      </label>
+                    </div>
+                    <button
+                      type='button'
+                      onClick={() => {
+                        setPrescriptionCode(prescriptionNumber);
+                        setPrescriptionNumber('');
+                        setPrescriptionErrorMessage('');
+                      }}
+                    >
+                      zapisz kod
+                    </button>
+                    <div>
+                      <label>
+                        {'lek: '}
+                        <input type='text' maxLength='25' onChange={(e) => setMedicineInput(e.target.value)} value={medicineInput} />
+                      </label>
+                    </div>
+                    <div>
+                      <label>
+                        {' dawkowanie: '}
+                        <input type='text' maxLength='30' onChange={(e) => setDosageInput(e.target.value)} value={dosageInput} />
+                      </label>
+                    </div>
+                    <button type='submit' onClick={(e) => handleAddMedicine(e)}>
+                      dodaj
+                    </button>
+                  </form>
+                  <div className='new-prescription'>
+                    <div>
                       {'Kod recepty: '}
-                      <input type='text' onChange={(e) => setPrescriptionNumber(e.target.value)} value={prescriptionNumber} />
-                    </label>
-                  </div>
-                  <button
-                    type='button'
-                    onClick={() => {
-                      setPrescriptionCode(prescriptionNumber);
-                      setPrescriptionNumber('');
-                      setPrescriptionErrorMessage('');
-                    }}
-                  >
-                    zapisz kod
-                  </button>
-                  <div>
-                    <label>
-                      {'lek: '}
-                      <input type='text' maxLength='25' onChange={(e) => setMedicineInput(e.target.value)} value={medicineInput} />
-                    </label>
-                  </div>
-                  <div>
-                    <label>
-                      {' dawkowanie: '}
-                      <input type='text' maxLength='30' onChange={(e) => setDosageInput(e.target.value)} value={dosageInput} />
-                    </label>
-                  </div>
-                  <button type='submit' onClick={(e) => handleAddMedicine(e)}>
-                    dodaj
-                  </button>
-                </form>
-                <div className='new-prescription'>
-                  <div>
-                    {'Kod recepty: '}
-                    {prescriptionCode}
-                  </div>
-                  <ul>
-                    {medicineList?.map((x) => (
-                      <li key={x.id}>
-                        <button
-                          onClick={() => {
-                            handleDeleteMedicine(x.id);
-                          }}
-                        >
-                          usuń
-                        </button>
-                        {' ' + x.name + ', ' + x.dosage}
-                      </li>
-                    ))}
-                  </ul>
-                  <div className='send-prescription-btn'>
-                    {prescriptionErrorMessage !== '' ? <div>{prescriptionErrorMessage}</div> : null}
-                    <button onClick={handleSendPrescription}>Wyślij</button>
+                      {prescriptionCode}
+                    </div>
+                    <ul>
+                      {medicineList?.map((x) => (
+                        <li key={x.id}>
+                          <button
+                            onClick={() => {
+                              handleDeleteMedicine(x.id);
+                            }}
+                          >
+                            usuń
+                          </button>
+                          {' ' + x.name + ', ' + x.dosage}
+                        </li>
+                      ))}
+                    </ul>
+                    <div className='send-prescription-btn'>
+                      {prescriptionErrorMessage !== '' ? <div>{prescriptionErrorMessage}</div> : null}
+                      <button onClick={handleSendPrescription}>Wyślij</button>
+                    </div>
                   </div>
                 </div>
-              </div>
-              
-            }
+              )}
             </div>
           )}
           {navigation.messages && (

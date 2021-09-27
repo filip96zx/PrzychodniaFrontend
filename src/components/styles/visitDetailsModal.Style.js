@@ -152,11 +152,6 @@ export const VisitDetailModalComponent = styled.div`
         width: 100%;
         box-shadow: 0px 0px 1px 0px gray;
         margin-left: 20px;
-        /* button {
-          position: absolute;
-          bottom: -15%;
-          right: 40%;
-        } */
         .send-prescription-btn{
           flex-grow: 1;
           display: flex;
@@ -172,6 +167,52 @@ export const VisitDetailModalComponent = styled.div`
         div {
           padding: 0px 0px 0px 10px;
         }
+      }
+    }
+  }
+
+  .findings-box{
+    width: calc(100% - 2rem);
+    max-width: 31rem;
+    .finding-item{
+      box-shadow: 0px 0px 1px 0px gray;
+      border-radius: 1em;
+      padding: 0;
+      margin: 5px 0;
+      .prescription-header{
+        padding: 0;
+        position: relative;
+        button{
+          position: absolute;
+          right: 0;
+        }
+      }
+      .finding-description{
+        padding: 0px;
+        margin: 0px;
+        p {
+          margin-left: 10px;
+        }
+      }
+    }
+    .new-finding-btn{
+      width: 95%;
+    }
+    .new-finding-box{
+      div{
+        padding: 5px 0px;
+        width: 100%;
+      }
+      .description-box{
+        display: flex;
+        label{
+          flex-grow: 1;
+        }
+        label div{
+          input{
+            width: 100%;
+          }
+        } 
       }
     }
   }
