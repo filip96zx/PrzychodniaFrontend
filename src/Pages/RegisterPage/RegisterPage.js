@@ -12,9 +12,11 @@ import { countryList } from '../../helpers/countriesConst';
 
 const StyledSpinner = styled(Spinner)`
   position: absolute;
-  transform: translate(-50%);
-  left: 55%;
-  top: 0%;
+  left: 53%;
+  top: -5%;
+  @media(max-width:390px){
+    left: 75%;
+  }
 `;
 const requiredWarrning = 'To pole jest wymagane';
 const validationSchema = Yup.object().shape({
@@ -174,7 +176,7 @@ const RegisterPage = () => {
           <button type='submit' onClick={handleSubmit(onSubmit)}>
             Utwórz konto
           </button>
-          {isloading && <StyledSpinner color='gray' backgroundColor='white'></StyledSpinner>}
+          {isloading && <StyledSpinner/>}
           <button type='button' onClick={handleGoBack}>
             Powrót
           </button>

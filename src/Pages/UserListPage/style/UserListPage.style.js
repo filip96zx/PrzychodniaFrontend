@@ -5,12 +5,19 @@ export const UserListComponent = styled.div`
   margin: 1rem auto;
   display: flex;
   flex-direction: column;
-  width: fit-content;
+  width: 90%;
   .search-element {
     display: flex;
     width: 100%;
     justify-content: center;
     margin-top: 30px;
+    margin-bottom: 30px;
+  }
+  .table-box{
+    table{
+      margin: 0 auto;
+    }
+    overflow-x: auto;
   }
 
   table {
@@ -38,9 +45,12 @@ export const UserListComponent = styled.div`
 
   .pagination-element {
     display: flex;
-    justify-content: end;
+    justify-content: center;
   }
   .role-manage-box {
+    div p {
+      word-break: break-word;
+    }
     select{
       min-width: 8em;
     }

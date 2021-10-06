@@ -7,13 +7,6 @@ import handleResponse from '../../helpers/handle-response';
 import { UserListComponent } from './style/UserListPage.style';
 import { countryList } from '../../helpers/countriesConst';
 
-const spinnerDiv = {
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  padding: '20px',
-};
-
 const UserListPage = () => {
   const params = useParams();
   const history = useHistory();
@@ -172,31 +165,31 @@ const UserListPage = () => {
         <input type='text' onChange={handleSearch} placeholder='szukaj' />
       </div>
       <div>
-        <table>
-          <thead>
-            <tr>
-              <th>id</th>
-              <th>Imię</th>
-              <th>Nazwisko</th>
-              <th>Email</th>
-              <th>Numer Telefonu</th>
-              <th>Role</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {isLoading && (
+        <div className={showModal? null :'table-box'}>
+          <table>
+            <thead>
               <tr>
-                <td colSpan='6'>
-                  <div style={spinnerDiv}>
-                    <Spinner color='gray' backgroundColor='white' />
-                  </div>
-                </td>
+                <th>id</th>
+                <th>Imię</th>
+                <th>Nazwisko</th>
+                <th>Email</th>
+                <th>Numer Telefonu</th>
+                <th>Role</th>
+                <th></th>
               </tr>
-            )}
-            {users ? users : null}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {isLoading && (
+                <tr>
+                  <td colSpan='6'>
+                    <Spinner style={{ margin: '0 auto' }} />
+                  </td>
+                </tr>
+              )}
+              {users ? users : null}
+            </tbody>
+          </table>
+        </div>
         <div className='pagination-element'>
           <button onClick={prevPage}>&lt;</button>
           <button onClick={nextPage}>&gt;</button>

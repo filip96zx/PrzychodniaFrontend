@@ -65,6 +65,7 @@ const PatientRegisteredVisitsPage = () => {
 
   return (
     <PatientRegisteredVisitComponent>
+      <div className={showModal? null :'table-box'}>
       <table>
         <thead>
           <tr>
@@ -89,6 +90,7 @@ const PatientRegisteredVisitsPage = () => {
           ))}
         </tbody>
       </table>
+      </div>
       {warning && <span>{warningMessage}</span>}
       {showModal && <VisitDetailsModal isDoctor={false} closeModal={() => setShowModal(false)} visit={visitDetails} cancelReservation={handleCancelReservation} />}
     </PatientRegisteredVisitComponent>

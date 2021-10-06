@@ -96,7 +96,7 @@ const DoctorDayVisitsForm = ({
           <div>spec. {visit.visitType}</div>
           status: <strong>{visitStatuses[visit.status]}</strong>
           <div>
-            {(visit.status === 1 || visit.status === 2) && <button onClick={() => getVisitDetails(visit.visitId)}>szczegóły</button>}
+            {(visit.status === 1 || visit.status === 2|| visit.status === 3) && <button onClick={() => getVisitDetails(visit.visitId)}>szczegóły</button>}
             <div className='cancel-delete-box'>
               {visit.status === 0 && <button onClick={() => deleteVisit(visit.visitId)}>usuń</button>}
               {visit.status === 5 && <button onClick={() => cancelHourFromList(visit)}>anuluj</button>}

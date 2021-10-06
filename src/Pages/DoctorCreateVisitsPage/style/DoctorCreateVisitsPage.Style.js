@@ -5,7 +5,7 @@ export const DoctorCreateVisitsComponent = styled.div`
   width: 100%;
   justify-content: space-evenly;
   flex-wrap: wrap;
-  padding-bottom: 1em;
+  padding-bottom: 2em;
   div {
     width: 150px;
   }
@@ -23,6 +23,8 @@ export const DoctorCreateVisitsComponent = styled.div`
     display: flex;
     width: 100%;
     justify-content: center;
+    align-items:center;
+    flex-direction: column;
   }
 
   

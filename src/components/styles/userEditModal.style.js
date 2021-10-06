@@ -9,11 +9,8 @@ export const UserEditModalComponent = styled.div`
   left: 0;
   flex-grow: 1;
   background-color: rgba(0, 0, 0, 0.42);
-  @media(min-width:630px) and (min-height:700px){
-
-    height: 100vh;
-    width: 100vw;
-  }
+  width: 100vw;
+  min-height: 100vh;
 
   .modal {
     position: relative;
@@ -55,6 +52,7 @@ export const UserEditFormComponent = styled.div`
       .role-list {
         width: 100%;
         p {
+          word-break: break-word;
           width: 100%;
           margin: 10px 22px;
           text-align: left;

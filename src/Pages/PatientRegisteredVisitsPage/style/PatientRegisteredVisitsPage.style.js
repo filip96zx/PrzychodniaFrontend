@@ -3,7 +3,13 @@ import { mainColor } from '../../../globalStyles/styleVariables';
 
 export const PatientRegisteredVisitComponent = styled.div`
   margin: 1rem auto;
-  width: fit-content;
+  width: 90%;
+  .table-box{
+    table{
+      margin: 0 auto;
+    }
+    overflow-x: auto;
+  }
   table {
     border-collapse: collapse;
     margin: 25px 0;

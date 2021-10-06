@@ -3,6 +3,7 @@ import DoctorDayVisitsForm from '../../components/doctorDayVisitsForm';
 import { DoctorCreateVisitsComponent } from './style/DoctorCreateVisitsPage.Style';
 import doctorService from '../../services/doctor.service';
 import VisitDetailsModal from '../../components/visitDetailsModal';
+import { Spinner } from '../../components/styles/spinner.style';
 
 const daysInfo = [
   { property: 'monday', number: 1, name: 'Poniedziałek' },
@@ -13,6 +14,7 @@ const daysInfo = [
 ];
 
 const DoctorCreateVisitsPage = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [dayVisitsInputs, setDayVisitsInputs] = useState({ monday: '', tuesday: '', wednesday: '', thursday: '', friday: '' });
   const [dayVisitsList, setDayVisitsLists] = useState({ monday: [], tuesday: [], wednesday: [], thursday: [], friday: [] });
 
@@ -70,6 +72,7 @@ const DoctorCreateVisitsPage = () => {
   };
 
   const getVisitsInWeek = () => {
+    setIsLoading(true);
     doctorService
       .getVisitsInWeek(new Date(searchDate))
       .then((response) => {
@@ -77,11 +80,13 @@ const DoctorCreateVisitsPage = () => {
         setVisitsToAdd([]);
         setWarning(false);
         loadDays(response.value);
+        setIsLoading(false);
       })
       .catch((err) => {
         clearLists();
         setWarning(true);
         setWarningMessage('Brak wizyt w tym tygodniu');
+        setIsLoading(false);
       });
   };
 
@@ -263,8 +268,7 @@ const DoctorCreateVisitsPage = () => {
       <DoctorCreateVisitsComponent>
         <div className='date-pick-box'>
           <label>
-            Wybierz tydzień{' '}
-            <input type='date' onChange={handleDateChange} value={searchDate} />
+            Wybierz tydzień <input type='date' onChange={handleDateChange} value={searchDate} />
           </label>
         </div>
         {daysInfo.map((day) => (
@@ -298,6 +302,7 @@ const DoctorCreateVisitsPage = () => {
         )}
         <div className='save-visit-box'>
           <button onClick={addNewVisits}>Zapisz nowe wizyty</button>
+          {isLoading && <Spinner style={{ maxWidth: '1.8em' }} />}
         </div>
       </DoctorCreateVisitsComponent>
       {showModal && <VisitDetailsModal isDoctor={true} closeModal={() => setShowModal(false)} visit={visitDetails} finishVisit={handeFinishVisit} cancelVisit={handeCancelVisit} />}

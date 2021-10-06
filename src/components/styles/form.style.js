@@ -8,7 +8,10 @@ export const FormComponent = styled.div`
   width: fit-content;
   padding-top: 2.5rem;
   margin: 1rem auto;
-  box-shadow: 0 0 2px 1px lightblue;
+  @media(min-width: 500px){
+
+    box-shadow: 0 0 2px 1px lightblue;
+  }
   border-radius: 1em;
   height: auto;
   span {
@@ -49,7 +52,7 @@ export const FormComponent = styled.div`
       height: 1.5rem;
       text-transform: uppercase;
       font-size: 1rem;
-      margin: 0 25px;
+      margin: 5px 25px;
       :hover {
         background-color: #ffff;
       }

@@ -45,6 +45,7 @@ const PatientDoneVisitsPage = () => {
 
   return (
     <PatientDoneVisitComponent>
+      <div className={showModal? null :'table-box'}>
       <table>
         <thead>
           <tr>
@@ -69,6 +70,7 @@ const PatientDoneVisitsPage = () => {
             )}
         </tbody>
       </table>
+      </div>
       {warning && <span>{warningMessage}</span>}
       {showModal && <VisitDetailsModal isDoctor={false} closeModal={()=>setShowModal(false)} visit={visitDetails}/>}
     </PatientDoneVisitComponent>

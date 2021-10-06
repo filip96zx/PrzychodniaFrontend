@@ -22,9 +22,12 @@ const StyledLink = styled(Link)`
 
 const StyledSpinner = styled(Spinner)`
   position: absolute;
-  transform: translate(-50%);
   left: 39%;
-  bottom: -80%;
+  bottom: -50%;
+  @media(max-width: 364px) {
+    left: 70%;
+    bottom: 30%;
+  }
 `;
 
 const LoginPage = () => {
@@ -86,10 +89,10 @@ const LoginPage = () => {
           <button type='submit' onClick={handleSubmit(onSubmit)}>
             zaloguj
           </button>
-          {isloading && <StyledSpinner color='gray' backgroundColor='white'></StyledSpinner>}
           <button type='button' onClick={handleGoToRegister}>
             Rejestracja
           </button>
+          {isloading && <StyledSpinner/>}
         </div>
         <StyledLink to='/forgotpassword'>Przypomnij hasło</StyledLink>
         <div className='error-box'>{errorMessage ? <span>{errorMessage}</span> : ''}</div>
