@@ -45,7 +45,9 @@ const App = () => {
           <Route path='/register'>{isLogged ? <Redirect push to='/' /> : <RegisterPage />}</Route>
           <Route path='/doctorcreatevisits'>{hasRole('doctor') ? <DoctorCreateVisitsPage /> : <Redirect push to='/' />}</Route>
           <Route path='/patientregister'>{hasRole('user') ? <PatientRegisterPage /> : <Redirect push to='/' />}</Route>
+          <Route path='/registeredvisits/:pageSize/:pageIndex'>{hasRole('user') ? <PatientRegisteredVisitsPage /> : <Redirect push to='/' />}</Route>
           <Route path='/registeredvisits'>{hasRole('user') ? <PatientRegisteredVisitsPage /> : <Redirect push to='/' />}</Route>
+          <Route path='/donevisits/:pageSize/:pageIndex'>{hasRole('user') ? <PatientDoneVisitsPage /> : <Redirect push to='/' />}</Route>
           <Route path='/donevisits'>{hasRole('user') ? <PatientDoneVisitsPage /> : <Redirect push to='/' />}</Route>
           <Route path='/userlist/:pageSize/:pageIndex'>{hasRole('admin') ? <UserListPage /> : <Redirect push to='/' />}</Route>
           <Route path='/userlist'>{hasRole('admin') ? <UserListPage /> : <Redirect push to='/' />}</Route>

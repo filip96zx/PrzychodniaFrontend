@@ -60,22 +60,22 @@ const cancelVisitRegistration = (data) => {
   return fetch(`${config.apiURL}/patient/cancelvisitreservation`, requestOptions).then(handleResponse);
 };
 
-const getRegisteredVisits = () => {
+const getRegisteredVisits = (pageIndex, pageSize) => {
   const requestOptions = {
     method: 'GET',
     headers: { ...authHeader(), 'Content-Type': 'application/json' },
     credentials: 'include',
   };
-  return fetch(`${config.apiURL}/patient/getreservedvisits`, requestOptions).then(handleResponse);
+  return fetch(`${config.apiURL}/patient/getreservedvisits?pageIndex=${pageIndex}&pageSize=${pageSize}`, requestOptions).then(handleResponse);
 };
 
-const getDoneVisits = () => {
+const getDoneVisits = (pageIndex, pageSize) => {
   const requestOptions = {
     method: 'GET',
     headers: { ...authHeader(), 'Content-Type': 'application/json' },
     credentials: 'include',
   };
-  return fetch(`${config.apiURL}/patient/getdonevisits`, requestOptions).then(handleResponse);
+  return fetch(`${config.apiURL}/patient/getdonevisits?pageIndex=${pageIndex}&pageSize=${pageSize}`, requestOptions).then(handleResponse);
 };
 
 const getVisitDetails = (data) => {

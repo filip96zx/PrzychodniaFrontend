@@ -29,4 +29,8 @@ export const PatientDoneVisitComponent = styled.div`
       border-bottom: 1px solid #ddd;
     }
   }
+  .pagination-element {
+    display: flex;
+    justify-content: center;
+  }
 `;

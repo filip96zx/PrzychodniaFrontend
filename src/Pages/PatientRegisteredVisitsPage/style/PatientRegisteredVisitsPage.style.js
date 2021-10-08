@@ -4,8 +4,8 @@ import { mainColor } from '../../../globalStyles/styleVariables';
 export const PatientRegisteredVisitComponent = styled.div`
   margin: 1rem auto;
   width: 90%;
-  .table-box{
-    table{
+  .table-box {
+    table {
       margin: 0 auto;
     }
     overflow-x: auto;
@@ -28,5 +28,9 @@ export const PatientRegisteredVisitComponent = styled.div`
     tbody tr {
       border-bottom: 1px solid #ddd;
     }
+  }
+  .pagination-element {
+    display: flex;
+    justify-content: center;
   }
 `;
