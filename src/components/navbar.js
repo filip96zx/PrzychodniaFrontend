@@ -12,6 +12,9 @@ const Navbar = ({ hasRole }) => {
     setLogedOut();
     window.location.reload();
   };
+  const hideItems = () => {
+    setShowItems(false);
+  };
 
   const LoginLogoutComponent = isAuth ? (
     <StyledNavLink onClick={hideItems} className='login-link' to='/' onClick={handleLogout}>
@@ -23,9 +26,6 @@ const Navbar = ({ hasRole }) => {
     </StyledNavLink>
   );
 
-  const hideItems = () => {
-    setShowItems(false);
-  };
 
   return (
     <NavbarComponent>
