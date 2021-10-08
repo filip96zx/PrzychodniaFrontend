@@ -165,7 +165,7 @@ const UserListPage = () => {
         <input type='text' onChange={handleSearch} placeholder='szukaj' />
       </div>
       <div>
-        <div className={showModal? null :'table-box'}>
+        <div className='table-box' style={showModal ? { overflowX: 'hidden' } : null}>
           <table>
             <thead>
               <tr>

@@ -23,6 +23,10 @@ const Navbar = ({ hasRole }) => {
     </StyledNavLink>
   );
 
+  const hideItems = () => {
+    setShowItems(false);
+  }
+
   return (
     <NavbarComponent>
       <div className='show-menu-btn'>
@@ -33,14 +37,14 @@ const Navbar = ({ hasRole }) => {
         </svg>
       </div>
       <div className={showItems ? 'show' : null}>
-        <StyledNavLink to='/' exact>
+        <StyledNavLink onClick={hideItems} to='/' exact>
           Strona główna
         </StyledNavLink>
-        {hasRole('admin') && <StyledNavLink to='/userlist'>Panel admina</StyledNavLink>}
-        {hasRole('doctor') && <StyledNavLink to='/doctorcreatevisits'>Panel lekarza</StyledNavLink>}
-        {hasRole('user') && <StyledNavLink to='/patientregister'>Rejestracja wizyt</StyledNavLink>}
-        {hasRole('user') && <StyledNavLink to='/registeredvisits'>Zaplanowane wizyty</StyledNavLink>}
-        {hasRole('user') && <StyledNavLink to='/donevisits'>Historia wizyt</StyledNavLink>}
+        {hasRole('admin') && <StyledNavLink onClick={hideItems} to='/userlist'>Panel admina</StyledNavLink>}
+        {hasRole('doctor') && <StyledNavLink onClick={hideItems} to='/doctorcreatevisits'>Panel lekarza</StyledNavLink>}
+        {hasRole('user') && <StyledNavLink onClick={hideItems} to='/patientregister'>Rejestracja wizyt</StyledNavLink>}
+        {hasRole('user') && <StyledNavLink onClick={hideItems} to='/registeredvisits'>Zaplanowane wizyty</StyledNavLink>}
+        {hasRole('user') && <StyledNavLink onClick={hideItems} to='/donevisits'>Historia wizyt</StyledNavLink>}
         {LoginLogoutComponent}
         {/* <RightSide>{LoginLogoutComponent}</RightSide> */}
       </div>

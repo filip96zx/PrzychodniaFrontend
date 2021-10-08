@@ -14,19 +14,19 @@ div {
   position: relative;
   display: flex;
   height: 2rem;
-  @media (max-width: 800px) {
+  @media (max-width: 1024px) {
     flex-direction: column;
     height: auto;
     overflow: hidden;
     display: none;
   }
 }
-@media (max-width: 800px) {
+@media (max-width: 1024px) {
   .show-menu-btn{
     display: flex;
   }
 }
-@media (min-width: 801px) {
+@media (min-width: 1025px) {
   .show-menu-btn {
     display: none;
   }
@@ -46,15 +46,18 @@ export const StyledNavLink = styled(NavLink)`
   display: flex;
   text-decoration: none;
   text-transform: uppercase;
+  justify-content: center;
   height: 100%;
   color: black;
   align-items: center;
-  font-size: 1.2rem;
-  padding: 0 5px;
+  margin: 2px 0;
+  font-size: 1.5rem;
   transition: 0.2s;
   font-weight: 600;
-  @media (min-width: 801px){
+  @media (min-width: 1025px){
     margin-right: 15px;
+    padding: 0 5px;
+    font-size: 1.2rem;
   }
   &.active {
     color: white;
