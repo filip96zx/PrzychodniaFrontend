@@ -18,14 +18,14 @@ const Navbar = ({ hasRole }) => {
       wyloguj
     </StyledNavLink>
   ) : (
-    <StyledNavLink className='login-link' to='/login'>
+    <StyledNavLink onClick={hideItems} className='login-link' to='/login'>
       Zaloguj
     </StyledNavLink>
   );
 
   const hideItems = () => {
     setShowItems(false);
-  }
+  };
 
   return (
     <NavbarComponent>
@@ -40,11 +40,31 @@ const Navbar = ({ hasRole }) => {
         <StyledNavLink onClick={hideItems} to='/' exact>
           Strona główna
         </StyledNavLink>
-        {hasRole('admin') && <StyledNavLink onClick={hideItems} to='/userlist'>Panel admina</StyledNavLink>}
-        {hasRole('doctor') && <StyledNavLink onClick={hideItems} to='/doctorcreatevisits'>Panel lekarza</StyledNavLink>}
-        {hasRole('user') && <StyledNavLink onClick={hideItems} to='/patientregister'>Rejestracja wizyt</StyledNavLink>}
-        {hasRole('user') && <StyledNavLink onClick={hideItems} to='/registeredvisits'>Zaplanowane wizyty</StyledNavLink>}
-        {hasRole('user') && <StyledNavLink onClick={hideItems} to='/donevisits'>Historia wizyt</StyledNavLink>}
+        {hasRole('admin') && (
+          <StyledNavLink onClick={hideItems} to='/userlist'>
+            Panel admina
+          </StyledNavLink>
+        )}
+        {hasRole('doctor') && (
+          <StyledNavLink onClick={hideItems} to='/doctorcreatevisits'>
+            Panel lekarza
+          </StyledNavLink>
+        )}
+        {hasRole('user') && (
+          <StyledNavLink onClick={hideItems} to='/patientregister'>
+            Rejestracja wizyt
+          </StyledNavLink>
+        )}
+        {hasRole('user') && (
+          <StyledNavLink onClick={hideItems} to='/registeredvisits'>
+            Zaplanowane wizyty
+          </StyledNavLink>
+        )}
+        {hasRole('user') && (
+          <StyledNavLink onClick={hideItems} to='/donevisits'>
+            Historia wizyt
+          </StyledNavLink>
+        )}
         {LoginLogoutComponent}
         {/* <RightSide>{LoginLogoutComponent}</RightSide> */}
       </div>
