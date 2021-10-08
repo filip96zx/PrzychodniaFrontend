@@ -9,6 +9,7 @@ const Navbar = ({ hasRole }) => {
 
   const handleLogout = () => {
     authenticationService.logout();
+    hideItems();
     setLogedOut();
     window.location.reload();
   };
@@ -17,7 +18,7 @@ const Navbar = ({ hasRole }) => {
   };
 
   const LoginLogoutComponent = isAuth ? (
-    <StyledNavLink onClick={hideItems} className='login-link' to='/login' onClick={handleLogout}>
+    <StyledNavLink className='login-link' to='/login' onClick={handleLogout}>
       wyloguj
     </StyledNavLink>
   ) : (
