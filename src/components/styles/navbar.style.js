@@ -3,41 +3,41 @@ import styled from 'styled-components';
 import { mainColor } from '../../globalStyles/styleVariables';
 
 export const NavbarComponent = styled.div`
-position: relative;
-.icon {
-  align-self: flex-end;
-  padding: 2px 1em 0 0;
-  cursor: pointer;
-}
-min-height: 2rem;
-div {
   position: relative;
-  display: flex;
-  height: 2rem;
-  @media (max-width: 1024px) {
-    flex-direction: column;
-    height: auto;
-    overflow: hidden;
-    display: none;
+  .icon {
+    align-self: flex-end;
+    padding: 2px 1em 0 0;
+    cursor: pointer;
   }
-}
-@media (max-width: 1024px) {
-  .show-menu-btn{
+  min-height: 2rem;
+  div {
+    position: relative;
     display: flex;
+    height: 2rem;
+    @media (max-width: 1024px) {
+      flex-direction: column;
+      height: auto;
+      overflow: hidden;
+      display: none;
+    }
   }
-}
-@media (min-width: 1025px) {
-  .show-menu-btn {
-    display: none;
+  @media (max-width: 1024px) {
+    .show-menu-btn {
+      display: flex;
+    }
   }
-  .login-link{
-    position: absolute;
-    right:0;
+  @media (min-width: 1025px) {
+    .show-menu-btn {
+      display: none;
+    }
+    .login-link {
+      position: absolute;
+      right: 0;
+    }
   }
-}
   box-shadow: 0 4px 2px -3px ${mainColor};
   background-image: linear-gradient(190deg, ${mainColor} 0%, rgba(255, 255, 255, 1) 100%);
-  .show{
+  .show {
     display: flex;
   }
 `;
@@ -54,8 +54,8 @@ export const StyledNavLink = styled(NavLink)`
   font-size: 1.5rem;
   transition: 0.2s;
   font-weight: 600;
-  @media (min-width: 1025px){
-    margin-right: 15px;
+  @media (min-width: 1025px) {
+    margin: 0px 15px 0 0;
     padding: 0 5px;
     font-size: 1.2rem;
   }

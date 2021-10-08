@@ -211,7 +211,7 @@ const VisitDetailsModal = ({ closeModal, visit, isDoctor, cancelReservation, fin
   };
 
   const loadPrescriptions = (list) => {
-    if(list.length === 0 ){
+    if (list.length === 0) {
       setPrescriptions([]);
       return;
     }
@@ -253,7 +253,7 @@ const VisitDetailsModal = ({ closeModal, visit, isDoctor, cancelReservation, fin
   };
 
   const loadFindings = (list) => {
-    if(list.length === 0 ){
+    if (list.length === 0) {
       setFindings([]);
       return;
     }
@@ -345,7 +345,7 @@ const VisitDetailsModal = ({ closeModal, visit, isDoctor, cancelReservation, fin
                           Adres: <span>{visit.patientAddress}</span>
                         </label>
                         <label>
-                          Płeć: <span>{visit.PatientGender === 0 ? 'Mężczyzna' : 'Kobieta'}</span>
+                          Płeć: <span>{visit.patientGender === 0 ? 'Mężczyzna' : 'Kobieta'}</span>
                         </label>
                       </div>
                     )}
@@ -399,7 +399,7 @@ const VisitDetailsModal = ({ closeModal, visit, isDoctor, cancelReservation, fin
                     <div className='finding-description'>
                       szczegóły:
                       <p>{item.description}</p>
-                      {isDoctor && <button onClick={()=>handleDeleteFinding(item.number)}>usuń badanie</button>}
+                      {isDoctor && <button onClick={() => handleDeleteFinding(item.number)}>usuń badanie</button>}
                     </div>
                   )}
                 </div>
