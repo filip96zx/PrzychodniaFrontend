@@ -14,7 +14,7 @@ const Navbar = ({ hasRole }) => {
   };
 
   const LoginLogoutComponent = isAuth ? (
-    <StyledNavLink className='login-link' to='/login' onClick={handleLogout}>
+    <StyledNavLink onClick={hideItems} className='login-link' to='/' onClick={handleLogout}>
       wyloguj
     </StyledNavLink>
   ) : (
