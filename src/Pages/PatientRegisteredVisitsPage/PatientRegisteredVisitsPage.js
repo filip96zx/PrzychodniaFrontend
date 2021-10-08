@@ -20,7 +20,7 @@ const PatientRegisteredVisitsPage = () => {
   const getRegisteredVisits = () => {
     setIsLoading(true);
     patientService
-      .getDoneVisits()
+      .getRegisteredVisits()
       .then((response) => {
         loadVisits(response.value);
         setIsLoading(false);
