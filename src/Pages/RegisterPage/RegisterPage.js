@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { useHistory } from 'react-router';
-import handleResponse from '../../helpers/handle-response';
 import styled from 'styled-components';
 import { FormComponent } from '../../components/styles/form.style';
 import { Spinner } from '../../components/styles/spinner.style';

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import visitStatuses from '../helpers/visitStatusConst';
 
 const PatientDayVisitComponent = ({ dayProperty, daysVisits, registerToVisit }) => {

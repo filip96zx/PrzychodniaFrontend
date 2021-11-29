@@ -48,10 +48,7 @@ export const FormComponent = styled.div`
     flex-wrap: wrap;
     margin-top: 1.5em;
     button {
-      border: 1px solid black;
-      height: 1.5rem;
       text-transform: uppercase;
-      font-size: 1rem;
       margin: 5px 25px;
       :hover {
         background-color: #ffff;

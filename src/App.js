@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useLayoutEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import LoginPage from './Pages/LoginPage/LoginPage';
 import HomePage from './Pages/HomePage/HomePage';
 import authenticationService from './services/authentication.service';

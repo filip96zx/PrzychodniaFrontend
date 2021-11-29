@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState} from 'react';
 import { VisitDetailModalComponent } from './styles/visitDetailsModal.Style';
 import visitStatuses from '../helpers/visitStatusConst';
 import doctorService from '../services/doctor.service';
@@ -302,7 +302,7 @@ const VisitDetailsModal = ({ closeModal, visit, isDoctor, cancelReservation, fin
     <VisitDetailModalComponent onClick={handleClose} className='background'>
       <div className='modal'>
         <div className='close-btn-container'>
-          <button onClick={closeModal}>X</button>
+          <button onClick={closeModal}><strong>&#10005;</strong></button>
         </div>
         <div className='modal-header'>
           <h3>
@@ -389,6 +389,7 @@ const VisitDetailsModal = ({ closeModal, visit, isDoctor, cancelReservation, fin
           {navigation.findings && (
             <div className='findings-box'>
               <h3>Wyniki badań</h3>
+              {findings.length === 0 && <span>Brak wyników</span>}
               {findings?.map((item) => (
                 <div key={item.number} className='finding-item'>
                   <div className='prescription-header'>
@@ -405,11 +406,11 @@ const VisitDetailsModal = ({ closeModal, visit, isDoctor, cancelReservation, fin
                 </div>
               ))}
               {isDoctor && (
-                <button className='new-finding-btn' onClick={() => setShowPrescriptionForm(!showPrescriptionForm)}>
-                  {!showPrescriptionForm ? 'Nowe badanie' : 'ukryj'}
+                <button className='new-finding-btn' onClick={() => setShowPrescriptionForm(!showFindingForm)}>
+                  {!showFindingForm ? 'Nowe badanie' : 'ukryj'}
                 </button>
               )}
-              {isDoctor && showPrescriptionForm && (
+              {isDoctor && showFindingForm && (
                 <form className='new-finding-box'>
                   <div>
                     <label>
@@ -436,6 +437,7 @@ const VisitDetailsModal = ({ closeModal, visit, isDoctor, cancelReservation, fin
           {navigation.prescriptions && (
             <div className='prescriptions-box'>
               <h3>Recepty</h3>
+              {prescriptions.length === 0 && <span>Brak recept</span>}
               {prescriptions?.map((item) => (
                 <div key={item.number} className='prescription-item'>
                   <div className='prescription-header'>

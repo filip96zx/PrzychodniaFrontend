@@ -264,7 +264,7 @@ const DoctorCreateVisitsPage = () => {
   };
 
   return (
-    <>
+    <div>
       <DoctorCreateVisitsComponent>
         <div className='date-pick-box'>
           <label>
@@ -306,7 +306,7 @@ const DoctorCreateVisitsPage = () => {
         </div>
       </DoctorCreateVisitsComponent>
       {showModal && <VisitDetailsModal isDoctor={true} closeModal={() => setShowModal(false)} visit={visitDetails} finishVisit={handeFinishVisit} cancelVisit={handeCancelVisit} />}
-    </>
+    </div>
   );
 };
 

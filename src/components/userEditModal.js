@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { UserEditModalComponent, UserEditFormComponent } from './styles/userEditModal.style';
-import { Spinner } from './styles/spinner.style';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import handleResponse from '../helpers/handle-response';
 import * as Yup from 'yup';
-import { FormComponent } from './styles/form.style';
 import userService from '../services/user.service';
 import { countryList } from '../helpers/countriesConst';
 
@@ -60,8 +57,10 @@ const UserEditModal = ({ closeModal, user, roles, reloadUsers, reload }) => {
 
   const loadRolesToAdd = () => {
     const rolesToAdd = [...roles];
-    userRoles?.map((role) => (rolesToAdd.indexOf(role) !== -1 ? rolesToAdd.splice(rolesToAdd.indexOf(role), 1) : null));
-    setRolesToAdd(rolesToAdd);
+    if(userRoles){
+      userRoles.map((role) => rolesToAdd.indexOf(role) !== -1 ? rolesToAdd.splice(rolesToAdd.indexOf(role), 1) : null);
+      setRolesToAdd(rolesToAdd);
+    }
   };
 
   const loadUserRoles = () => {
@@ -100,7 +99,7 @@ const UserEditModal = ({ closeModal, user, roles, reloadUsers, reload }) => {
     <UserEditModalComponent onClick={handleClose} className='background'>
       <div className='modal'>
         <div className='close-btn-container'>
-          <button onClick={closeModal}>X</button>
+          <button onClick={closeModal}><strong>&#10005;</strong></button>
         </div>
         <UserEditFormComponent>
           <form onSubmit={handleSubmit(onSubmit)}>

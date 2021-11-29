@@ -16,7 +16,8 @@ const StyledLink = styled(Link)`
   display: block;
   text-align: center;
   :hover {
-    color: #666;
+    color: #444;
+    text-decoration: underline;
   }
 `;
 

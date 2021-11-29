@@ -3,9 +3,8 @@ import { Spinner } from '../../components/styles/spinner.style';
 import userService from '../../services/user.service';
 import { useParams, useHistory } from 'react-router-dom';
 import UserEditModal from '../../components/userEditModal';
-import handleResponse from '../../helpers/handle-response';
 import { UserListComponent } from './style/UserListPage.style';
-import { countryList } from '../../helpers/countriesConst';
+
 
 const UserListPage = () => {
   const params = useParams();
