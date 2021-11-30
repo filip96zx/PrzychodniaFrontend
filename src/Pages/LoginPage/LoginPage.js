@@ -24,10 +24,12 @@ const StyledLink = styled(Link)`
 const StyledSpinner = styled(Spinner)`
   position: absolute;
   left: 39%;
-  bottom: -50%;
-  @media(max-width: 364px) {
-    left: 70%;
-    bottom: 30%;
+  bottom: 0;
+  @media(max-width: 355px) {
+    position: absolute;
+    top:0;
+    left:20%;
+
   }
 `;
 
@@ -43,7 +45,7 @@ const LoginPage = () => {
     formState: { errors },
   } = useForm(formOptions);
   const [errorMessage, setErrorMessage] = useState('');
-  const [isloading, setIsLoading] = useState(false);
+  const [isloading, setIsLoading] = useState(true);
   // eslint-disable-next-line
   const [isAuth, setLoggedIn, setLoggedOut] = useAuth();
   const history = useHistory();
@@ -90,10 +92,10 @@ const LoginPage = () => {
           <button type='submit' onClick={handleSubmit(onSubmit)}>
             zaloguj
           </button>
+          {isloading && <StyledSpinner/>}
           <button type='button' onClick={handleGoToRegister}>
             Rejestracja
           </button>
-          {isloading && <StyledSpinner/>}
         </div>
         <StyledLink to='/forgotpassword'>Przypomnij hasło</StyledLink>
         <div className='error-box'>{errorMessage ? <span>{errorMessage}</span> : ''}</div>
