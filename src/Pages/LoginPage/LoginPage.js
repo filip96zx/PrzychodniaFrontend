@@ -45,7 +45,7 @@ const LoginPage = () => {
     formState: { errors },
   } = useForm(formOptions);
   const [errorMessage, setErrorMessage] = useState('');
-  const [isloading, setIsLoading] = useState(true);
+  const [isloading, setIsLoading] = useState(false);
   // eslint-disable-next-line
   const [isAuth, setLoggedIn, setLoggedOut] = useAuth();
   const history = useHistory();

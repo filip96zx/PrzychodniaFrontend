@@ -50,9 +50,11 @@ const RegisterPage = () => {
 
 
   const onSubmit = (data) => {
+    Object.keys(data).map(i => data[i] = typeof data[i] == 'string' ? data[i].trim() : data[i]);
     setIsLoading(true);
     setSucceed(false);
     const newUser = { ...data, dateOfBirth: data.dateOfBirth.toISOString().slice(0,10), gender: parseInt(data.gender), userName: data.email };
+    console.log(JSON.stringify(newUser))
     userService
       .register(newUser)
       .then(response => {

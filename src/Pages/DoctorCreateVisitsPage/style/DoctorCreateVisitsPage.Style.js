@@ -74,7 +74,7 @@ export const DoctorCreateVisitsComponent = styled.div`
   }
 
   .visit-item {
-    box-shadow: 0px 0px 1px gray;
+    box-shadow: 0px 0px 2px gray;
     margin: 4px;
     padding: 5px;
     border-radius: 1em;

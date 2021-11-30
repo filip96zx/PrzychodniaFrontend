@@ -111,7 +111,7 @@ const VisitDetailsModal = ({ closeModal, visit, isDoctor, cancelReservation, fin
 
     let messages = [];
     if (isDoctor) {
-      const data = { visitId: visit.visitId, message: messageInput };
+      const data = { visitId: visit.visitId, message: messageInput.trim() };
       setMessageInput('');
       doctorService
         .sendMessage(data)
@@ -122,7 +122,7 @@ const VisitDetailsModal = ({ closeModal, visit, isDoctor, cancelReservation, fin
         })
         .catch((err) => err);
     } else {
-      const data = { visitId: visit.visitId, message: messageInput, doctorId: String(visit.doctorId) };
+      const data = { visitId: visit.visitId, message: messageInput.trim(), doctorId: String(visit.doctorId) };
       setMessageInput('');
       patientService
         .sendMessage(data)
@@ -157,7 +157,7 @@ const VisitDetailsModal = ({ closeModal, visit, isDoctor, cancelReservation, fin
     e.preventDefault();
     if (dosageInput !== '' && medicineInput !== '') {
       setPrescriptionErrorMessage('');
-      setMedicineList([...medicineList, { id: medicineList.length, name: medicineInput, dosage: dosageInput }]);
+      setMedicineList([...medicineList, { id: medicineList.length, name: medicineInput.trim(), dosage: dosageInput.trim() }]);
       setDosageInput('');
       setMedicineInput('');
     }
@@ -173,7 +173,7 @@ const VisitDetailsModal = ({ closeModal, visit, isDoctor, cancelReservation, fin
       setPrescriptionErrorMessage('Wpisz kod recepty');
     } else {
       const medicines = medicineList.map((x) => ({ name: x.name, dosage: x.dosage }));
-      const prescription = { code: prescriptionCode, medicines: medicines };
+      const prescription = { code: prescriptionCode.trim(), medicines: medicines.trim() };
       const data = { visitId: visit.visitId, prescription: JSON.stringify(prescription) };
       setPrescriptionCode('');
       setMedicineList([]);
@@ -238,7 +238,7 @@ const VisitDetailsModal = ({ closeModal, visit, isDoctor, cancelReservation, fin
     } else if (findingDescriptionInput === '') {
       setFindingErrorMessage('Wpisz opis badania');
     } else {
-      const finding = { title: findingTitleInput, description: findingDescriptionInput };
+      const finding = { title: findingTitleInput.trim(), description: findingDescriptionInput.trim() };
       const data = { visitId: visit.visitId, finding: JSON.stringify(finding) };
       setFindingErrorMessage('');
       setFindingTitleInput('');

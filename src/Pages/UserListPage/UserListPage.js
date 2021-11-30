@@ -135,7 +135,7 @@ const UserListPage = () => {
 
   const handleAddSpecialisation = () => {
     if (specialisationToAdd !== '') {
-      const data = { roleName: specialisationToAdd };
+      const data = { roleName: specialisationToAdd.trim() };
       userService
         .addSpecialisation(data)
         .then((reponse) => {

@@ -40,7 +40,7 @@ export const PatientRegisterPageComponent = styled.div`
       align-items: center;
     }
     .visit-item {
-      box-shadow: 0px 0px 1px gray;
+      box-shadow: 0px 0px 2px gray;
       margin: 10px 5px;
       padding: 5px;
       border-radius: 1em;
