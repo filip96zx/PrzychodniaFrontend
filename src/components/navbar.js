@@ -21,8 +21,8 @@ const Navbar = ({ hasRole }) => {
       setHide(true);
       setHideDelay(true);
       setTimeout(() => {
-        setHide(false);
         setShowItems(false);
+        setHide(false);
         setHideDelay(false);
       }, 400);
     }
@@ -48,31 +48,31 @@ const Navbar = ({ hasRole }) => {
 
   const menu = (
     <>
-      <StyledNavLink onClick={hideItems} to='/' exact>
+      <StyledNavLink onClick={handleMenuButton} to='/' exact>
         Strona główna
       </StyledNavLink>
       {hasRole('admin') && (
-        <StyledNavLink onClick={hideItems} to='/userlist'>
+        <StyledNavLink onClick={handleMenuButton} to='/userlist'>
           Panel admina
         </StyledNavLink>
       )}
       {hasRole('doctor') && (
-        <StyledNavLink onClick={hideItems} to='/doctorcreatevisits'>
+        <StyledNavLink onClick={handleMenuButton} to='/doctorcreatevisits'>
           Panel lekarza
         </StyledNavLink>
       )}
       {hasRole('user') && (
-        <StyledNavLink onClick={hideItems} to='/patientregister'>
+        <StyledNavLink onClick={handleMenuButton} to='/patientregister'>
           Rejestracja wizyt
         </StyledNavLink>
       )}
       {hasRole('user') && (
-        <StyledNavLink onClick={hideItems} to='/registeredvisits'>
+        <StyledNavLink onClick={handleMenuButton} to='/registeredvisits'>
           Zaplanowane wizyty
         </StyledNavLink>
       )}
       {hasRole('user') && (
-        <StyledNavLink onClick={hideItems} to='/donevisits'>
+        <StyledNavLink onClick={handleMenuButton} to='/donevisits'>
           Historia wizyt
         </StyledNavLink>
       )}
