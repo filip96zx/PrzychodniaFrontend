@@ -60,6 +60,7 @@ const DoctorCreateVisitsPage = () => {
   useEffect(() => {
     getVisitsInWeek();
     getDoctorTypes();
+    // eslint-disable-next-line
   }, [searchDate]);
 
   const getDoctorTypes = () => {

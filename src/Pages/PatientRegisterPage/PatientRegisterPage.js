@@ -53,7 +53,7 @@ const PatientRegisterPage = () => {
   const [searchDate, setSearchDate] = useState(selectMonday(new Date()));
 
   useEffect(() => {
-    patientService.getDoctorsTypes().then((response) => setDoctorTypes(response.value));
+    patientService.getDoctorsTypes().then((response) => setDoctorTypes(response.value)).catch(err => err);
   }, []);
 
   useEffect(() => {

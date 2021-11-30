@@ -48,7 +48,7 @@ const UserEditModal = ({ closeModal, user, roles, reloadUsers, reload }) => {
 
   const onSubmit = (data) => {
     const updateData = { userId: String(user.id), ...data, isConfirmed: data.isConfirmed === 'true' ? true : false, gender: data.gender * 1 };
-    userService.updateUser(updateData).then((response) => reloadUsers(!reload));
+    userService.updateUser(updateData).then((response) => {reloadUsers(!reload); closeModal();});
   };
 
   const handleClose = (e) => {

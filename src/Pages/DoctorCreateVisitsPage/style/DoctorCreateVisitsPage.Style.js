@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { borderColor } from '../../../globalStyles/styleVariables';
 
 export const DoctorCreateVisitsComponent = styled.div`
   display: flex;
@@ -43,17 +44,16 @@ export const DoctorCreateVisitsComponent = styled.div`
   .day-header {
     font-size: 1.4rem;
     padding: 0px 5px;
-    //border-bottom: 2px black solid;
     text-align: center;
   }
 
   div.waiting-visit {
-    //background-color: rgba(170, 255, 181, 0.5);
     background-color: white;
   }
 
   div.reserved-visit {
-    box-shadow: 0px 0px 1px 0px black;
+    box-shadow: 0px 0px 2px 0px black;
+    border: 1px solid gray;
   }
 
   .day-column{
@@ -61,7 +61,16 @@ export const DoctorCreateVisitsComponent = styled.div`
     flex-direction: column;
     flex-grow: 1;
     align-items: center;
-    margin: 0 10px;
+    @media (max-width: 600px){
+        width: 100%;
+        padding-bottom: 50px;
+        border-bottom: 2px solid ${borderColor};
+      }
+      @media (max-width: 1024px){
+        min-width: 40%;
+        padding-bottom: 50px;
+        border-bottom: 2px solid ${borderColor};
+      }
   }
 
   .visit-item {

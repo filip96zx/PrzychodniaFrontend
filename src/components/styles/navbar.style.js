@@ -11,7 +11,7 @@ const fallDown = keyframes`
   }
 `;
 
-const fallUp = keyframes`
+const moveUp = keyframes`
   from {
     max-height: 100vh;
   }
@@ -19,6 +19,36 @@ const fallUp = keyframes`
     max-height: 0; 
   }
 `;
+
+const moveRotate = (move, rotate) => 
+  keyframes`
+    0% {
+
+    }
+    50%{
+      transform-origin: center;
+      transform: translateY(${move});
+    }
+    100%{
+      transform-origin: center;
+      transform: rotate(${rotate}) translateY(${move}) ;
+    }
+  `;
+
+const moveRotateBack = (move, rotate) => 
+  keyframes`
+  0% {
+    transform-origin: center;
+    transform: rotate(${rotate}) translateY(${move})
+  }
+  50%{
+    transform-origin: center;
+    transform: translateY(${move});
+  }
+  100%{
+  }
+`;
+
 
 export const NavbarComponent = styled.div`
   position: relative;
@@ -62,11 +92,28 @@ export const NavbarComponent = styled.div`
       overflow: hidden;
       animation: ${fallDown} 1s forwards;
     }
-    /* .show{
-      display: none;
-    } */
     .hide {
-      animation: ${fallUp} .2s forwards;
+      animation: ${moveUp} .2s forwards;
+    }
+
+    .cross #rect-one {
+      animation: ${moveRotate('30px', '45deg')} .3s linear forwards;
+    }
+    .cross #rect-two {
+      animation: ${moveRotate('0px', '-45deg')} .3s linear forwards;
+    }
+    .cross #rect-three {
+      animation: ${moveRotate('-30px', '45deg')} .3s linear forwards;
+    }
+    .menu #rect-one {
+      animation: ${moveRotateBack('30px', '45deg')} .3s linear forwards;
+    }
+    .menu #rect-two {
+      animation: ${moveRotateBack('0px', '-45deg')} .3s linear forwards;
+    }
+    .menu #rect-three {
+
+      animation: ${moveRotateBack('-30px', '45deg')} .3s linear forwards;
     }
 
   }

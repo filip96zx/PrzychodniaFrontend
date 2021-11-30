@@ -9,7 +9,8 @@ const rotate = keyframes`
   }
 `;
 
-export const Spinner = styled.div`
+export const Spinner = styled.span`
+  display: block;
   width: 1.8em;
   height: 1.8em;
   border-radius: 50%;

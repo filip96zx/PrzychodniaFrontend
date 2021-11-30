@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { borderColor } from '../../../globalStyles/styleVariables';
 
 export const PatientRegisterPageComponent = styled.div`
   width: 100%;
@@ -22,11 +23,20 @@ export const PatientRegisterPageComponent = styled.div`
     width: 100%;
     padding: 10px 0px;
     flex-wrap: wrap;
-    margin: 0 10px;
     .day-column {
       display: flex;
       flex-direction: column;
       flex-grow: 1;
+      @media (max-width: 600px){
+        width: 100%;
+        padding-bottom: 50px;
+        border-bottom: 2px solid ${borderColor};
+      }
+      @media (max-width: 1024px){
+        min-width: 50%;
+        padding-bottom: 50px;
+        border-bottom: 2px solid ${borderColor};
+      }
       align-items: center;
     }
     .visit-item {
@@ -38,8 +48,8 @@ export const PatientRegisterPageComponent = styled.div`
     }
     .day-header {
       font-size: 1.8rem;
-      //border-bottom: 2px black solid;
       text-align: center;
+      border-bottom: 1px solid ${borderColor};
     }
 
 
