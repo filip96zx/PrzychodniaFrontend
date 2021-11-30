@@ -13,7 +13,7 @@ const fallDown = keyframes`
 
 const moveUp = keyframes`
   from {
-    max-height: 100vh;
+    max-height: 50vh;
   }
   to {
     max-height: 0; 
@@ -76,10 +76,13 @@ export const NavbarComponent = styled.div`
   
     }
     .icon {
-      margin-right: 5px;
-      padding: 0 5px;
+      margin-right: 10px;
+      overflow: visible;
+      padding: 0 7px;
+      transition: .2s;
       &:hover{
         cursor: pointer;
+        transform: scale(1.1);
       }
     }
     .row-menu {
@@ -90,10 +93,12 @@ export const NavbarComponent = styled.div`
       flex-direction: column;
       max-height: 0;
       overflow: hidden;
-      animation: ${fallDown} 1s forwards;
     }
     .hide {
-      animation: ${moveUp} .2s forwards;
+      animation: ${moveUp} .4s forwards;
+    }
+    .show{
+      animation: ${fallDown} 1.5s forwards;
     }
 
     .cross #rect-one {

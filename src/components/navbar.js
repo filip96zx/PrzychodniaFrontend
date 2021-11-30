@@ -21,10 +21,10 @@ const Navbar = ({ hasRole }) => {
       setHide(true);
       setHideDelay(true);
       setTimeout(() => {
-        setShowItems(false);
         setHide(false);
+        setShowItems(false);
         setHideDelay(false);
-      }, 200);
+      }, 400);
     }
   };
 
@@ -81,7 +81,7 @@ const Navbar = ({ hasRole }) => {
   );
 
   const menuIcon = (
-    <svg onClick={() => handleMenuButton()} className={showItems ? 'icon cross': 'icon menu'} viewBox='0 0 100 80' width='30' height='30'>
+    <svg onClick={() => handleMenuButton()} className={(!showItems || hide) ? 'icon menu':'icon cross' } viewBox='0 0 100 80' width='30' height='30'>
       <rect id='rect-one' width='100' rx='9' height='20'></rect>
       <rect id='rect-two' y='30' rx='9' width='100' height='20'></rect>
       <rect id='rect-three' y='60' rx='9' width='100' height='20'></rect>
@@ -92,9 +92,9 @@ const Navbar = ({ hasRole }) => {
     <NavbarComponent>
       <div className='show-menu-container'>{menuIcon}</div>
       <div className='row-menu'>{menu}</div>
-      {showItems && <div className={hide ? 'column-menu hide' : 'column-menu'}>{menu}</div>}
-
-      {/* <div className={showItems ? 'column-menu show' : 'column-menu show hide'}>{menu}</div> */}
+      {showItems && <div className={hide ? 'column-menu hide' : 'column-menu show'}>{menu}</div>}
+      
+      {/* <div className={showItems ? 'column-menu hide' : 'column-menu show hide'}>{menu}</div> */}
     </NavbarComponent>
   );
 };
