@@ -1,6 +1,6 @@
 # Deploy
 
-Strona pod którą można zobaczyć projekt [Clinic] (http://vps-63e72677.vps.ovh.net).
+Strona pod którą można zobaczyć projekt [Clinic](http://vps-63e72677.vps.ovh.net).
 
 ## Konta użytkowników
 
@@ -42,11 +42,11 @@ Rejestracja na wizyty w przeszłym terminie celowo nie została ogarniczona do u
 #### Zapanowane wizyty
 
 Lista zaplanowanych wizyt, ze szczegółów wizyty można odczytać dane lekarza, recepty, wyniki badań, a także pisać wiadomości do lekarza.\
-Można wypisać się z zarezerwowanej wizyty przyciskiem `anuluj rezerwację` w szczegółach wizyty w zakładce `informacje`.\
+Można wypisać się z zarezerwowanej wizyty przyciskiem `anuluj rezerwację` w szczegółach wizyty w zakładce `informacje`.
 
 #### Historia wizyt
 
-Lista zakończonych lub anulowanych przez lekarza wizyt, ze szczegółów wizyty można odczytać dane lekarza, recepty, wyniki badań, a także pisać wiadomości do lekarza.\
+Lista zakończonych lub anulowanych przez lekarza wizyt, ze szczegółów wizyty można odczytać dane lekarza, recepty, wyniki badań, a także pisać wiadomości do lekarza.
 
 
 ## Rejestracja konta
