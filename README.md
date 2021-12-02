@@ -1,70 +1,58 @@
-# Getting Started with Create React App
+# Deploy
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Strona pod którą można zobaczyć projekt [Clinic] (http://vps-63e72677.vps.ovh.net).
 
-## Available Scripts
+## Konta użytkowników
 
-In the project directory, you can run:
 
-### `npm start`
+Lekarz: `lekarz@email.pl`, hasło: `Haslo123.`,\
+pacjent: `pacjent@email.pl` hasło: `Haslo123.`,\
+admina login: `admin@email.pl`  hasło: `Haslo123.`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Instrukcja
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### `admin`-Admin, Panel Admina
 
-### `npm test`
+Wyszukiwarka umożliwia filtrowanie po wszystkich właściwościach użytkowników, także po rolach.\
+Z listy użytkowników moża edytować dane użytkownika, edytować role.\
+W aplikacji są wbudowane trzy role: admin, user, doctor. Odpowiadają one typom kont.\
+Do konta z rolą `doctor` należy także przypisać specjalizacje pod którymi będzie można planować wizyty.\
+Specjalizacje lekarskie są także rolami które `admin` może tworzyć lub usuwać jeżeli żaden użytkownik nie ma przypisanej danej specjalizacji. 
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+### `doctor`- Lekarz, Panel Lekarza
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Lekarz ma podgląd swoich wizyt w danym tygodniu i możliwość przełączania się między tygodniami.\
+Nowe wizyty dodaje się formularzem pod wybranym dniem, gdzie należy ustawić godzinę i wybrać specjalizację pod którą ma być wizyta. po zakończeniu dodawania nowych wizyt należy zapisać je w bazie danych przyciskiem `Zapisz nowe wizyty`.\
+W wizycie na którą ktoś się zarejestrował można przejść do szczegółów, w modalu który się wyświetli można: wystawić recepte, przesłać wyniki badań lub wysyłać wiadomości do pacjenta.
+Istnieje możliwość odwołania lub zakończenia wizyty, w tym momencie zmiana ta ma charakter informacyjny nie niesie za sobą innych następstw niż wyświetlanie odpowiednio w historii wizyt lub  liście zaplanowanych wizyt na koncie pacjenta.\
+\
+Tworzenie wizyt w przeszłym terminie celowo nie zostało ogarniczone do ułatwienia testowania funkcjonalności.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### `user`- Pacjent
 
-### `npm run eject`
+#### Rejestracja wizyt
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Należy wybrać typ wizyty i tydzień, opcjonalnie można wybrać konkretnego lekarza którego wizyt szukamy.\
+Z wyświetlonych wizyt moża zarejestrować się na wolne terminy przyciskiem `zarejestuj`.\
+Rejestracja jest ograniczona do jednej wizyt danego typu u danego lekarza w danym dniu.\
+Rejestracja na wizyty w przeszłym terminie celowo nie została ogarniczona do ułatwienia testowania funkcjonalności.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### Zapanowane wizyty
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Lista zaplanowanych wizyt, ze szczegółów wizyty można odczytać dane lekarza, recepty, wyniki badań, a także pisać wiadomości do lekarza.\
+Można wypisać się z zarezerwowanej wizyty przyciskiem `anuluj rezerwację` w szczegółach wizyty w zakładce `informacje`.\
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+#### Historia wizyt
 
-## Learn More
+Lista zakończonych lub anulowanych przez lekarza wizyt, ze szczegółów wizyty można odczytać dane lekarza, recepty, wyniki badań, a także pisać wiadomości do lekarza.\
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Rejestracja konta
 
-### Code Splitting
+Rejestracja za pomocą formularza po przejsciu do logowania następnie naciśnięciu przycisku `rejestracja`.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## przypomnienie hasła
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Przypomnienie hasła za pomocą formularza po przejsciu do logowania następnie naciśnięciu odnośnika `Przypomnij hasło`, jeżeli na podany email jest zarejestrowane konto zostanie wysłana wiadomość z linkiem do zrestartowania hasła.

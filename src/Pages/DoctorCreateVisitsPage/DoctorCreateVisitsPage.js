@@ -302,7 +302,9 @@ const DoctorCreateVisitsPage = () => {
           </div>
         )}
         <div className='save-visit-box'>
-          <button onClick={addNewVisits}>Zapisz nowe wizyty</button>
+          <button className={visitsToAdd.length > 0 ? 'featured' : null} onClick={addNewVisits}>
+            Zapisz nowe wizyty
+          </button>
           {isLoading && <Spinner style={{ maxWidth: '1.8em' }} />}
         </div>
       </DoctorCreateVisitsComponent>

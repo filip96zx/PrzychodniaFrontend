@@ -26,8 +26,16 @@ export const DoctorCreateVisitsComponent = styled.div`
     justify-content: center;
     align-items:center;
     flex-direction: column;
+    button {
+      transition: 0.2s;
+      margin: 1rem;
+    }
   }
 
+  .featured {
+    box-shadow: 0px 0px 5px 2px ${borderColor};
+    transform: scale(1.1);
+  }
   
   div.add-visit-box {
     padding: 5px;
@@ -48,12 +56,14 @@ export const DoctorCreateVisitsComponent = styled.div`
   }
 
   div.waiting-visit {
-    background-color: white;
+    background-color: rgba(247, 247, 247, 1);
+
   }
 
   div.reserved-visit {
     box-shadow: 0px 0px 2px 0px black;
     border: 1px solid gray;
+    background-color: white;
   }
 
   .day-column{
