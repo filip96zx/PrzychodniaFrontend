@@ -1,6 +1,7 @@
 # Deploy
 
-Strona pod którą można zobaczyć projekt [Clinic](http://vps-63e72677.vps.ovh.net).
+Strona pod którą można zobaczyć projekt [Clinic](http://vps-63e72677.vps.ovh.net).\
+http://vps-63e72677.vps.ovh.net
 
 ## Konta użytkowników
 
