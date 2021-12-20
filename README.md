@@ -6,8 +6,8 @@ http://vps-63e72677.vps.ovh.net
 ## Konta użytkowników
 
 
-Lekarz: `lekarz@email.pl`, hasło: `Haslo123.`,\
-pacjent: `pacjent@email.pl` hasło: `Haslo123.`,\
+Lekarz: `lekarz@email.pl`, hasło: `Haslo123.`\
+pacjent: `pacjent@email.pl` hasło: `Haslo123.`\
 admina login: `admin@email.pl`  hasło: `Haslo123.`
 
 ## Instrukcja
