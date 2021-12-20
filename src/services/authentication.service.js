@@ -1,6 +1,8 @@
 import config from '../config';
 import handleResponse from '../helpers/handle-response';
 
+const apiUrl = config.apiURL();
+
 const login = (login, password) => {
   const requestOptions = {
     method: 'POST',
@@ -8,7 +10,7 @@ const login = (login, password) => {
     credentials: 'include',
     body: JSON.stringify({ login, password }),
   };
-  return fetch(`${config.apiURL}/auth`, requestOptions)
+  return fetch(`${apiUrl}/auth`, requestOptions)
     .then(handleResponse)
     .then((user) => {
       localStorage.setItem('user', JSON.stringify(user));

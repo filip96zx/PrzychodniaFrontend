@@ -2,13 +2,15 @@ import config from '../config';
 import authHeader from '../helpers/auth-header';
 import handleResponse from '../helpers/handle-response';
 
+const apiUrl = config.apiURL();
+
 const getDoctorsTypes = () => {
   const requestOptions = {
     method: 'GET',
     headers: { ...authHeader(), 'Content-Type': 'application/json' },
     credentials: 'include',
   };
-  return fetch(`${config.apiURL}/patient/getdoctors`, requestOptions).then(handleResponse);
+  return fetch(`${apiUrl}/patient/getdoctors`, requestOptions).then(handleResponse);
 };
 const getDoctorsInType = (data) => {
   const requestOptions = {
@@ -17,7 +19,7 @@ const getDoctorsInType = (data) => {
     credentials: 'include',
     body: JSON.stringify(data),
   };
-  return fetch(`${config.apiURL}/patient/getdoctorsintype`, requestOptions).then(handleResponse);
+  return fetch(`${apiUrl}/patient/getdoctorsintype`, requestOptions).then(handleResponse);
 };
 
 const getDoctorVisits = (data) => {
@@ -27,7 +29,7 @@ const getDoctorVisits = (data) => {
     credentials: 'include',
     body: JSON.stringify(data),
   };
-  return fetch(`${config.apiURL}/patient/getvisits`, requestOptions).then(handleResponse);
+  return fetch(`${apiUrl}/patient/getvisits`, requestOptions).then(handleResponse);
 };
 
 const getDoctorAllVisits = (data) => {
@@ -37,7 +39,7 @@ const getDoctorAllVisits = (data) => {
     credentials: 'include',
     body: JSON.stringify(data),
   };
-  return fetch(`${config.apiURL}/patient/getalldoctorsvisits`, requestOptions).then(handleResponse);
+  return fetch(`${apiUrl}/patient/getalldoctorsvisits`, requestOptions).then(handleResponse);
 };
 
 const registerToVisit = (data) => {
@@ -47,7 +49,7 @@ const registerToVisit = (data) => {
     credentials: 'include',
     body: JSON.stringify(data),
   };
-  return fetch(`${config.apiURL}/patient/registertovisit`, requestOptions).then(handleResponse);
+  return fetch(`${apiUrl}/patient/registertovisit`, requestOptions).then(handleResponse);
 };
 
 const cancelVisitRegistration = (data) => {
@@ -57,7 +59,7 @@ const cancelVisitRegistration = (data) => {
     credentials: 'include',
     body: JSON.stringify(data),
   };
-  return fetch(`${config.apiURL}/patient/cancelvisitreservation`, requestOptions).then(handleResponse);
+  return fetch(`${apiUrl}/patient/cancelvisitreservation`, requestOptions).then(handleResponse);
 };
 
 const getRegisteredVisits = (pageIndex, pageSize) => {
@@ -66,7 +68,7 @@ const getRegisteredVisits = (pageIndex, pageSize) => {
     headers: { ...authHeader(), 'Content-Type': 'application/json' },
     credentials: 'include',
   };
-  return fetch(`${config.apiURL}/patient/getreservedvisits?pageIndex=${pageIndex}&pageSize=${pageSize}`, requestOptions).then(handleResponse);
+  return fetch(`${apiUrl}/patient/getreservedvisits?pageIndex=${pageIndex}&pageSize=${pageSize}`, requestOptions).then(handleResponse);
 };
 
 const getDoneVisits = (pageIndex, pageSize) => {
@@ -75,7 +77,7 @@ const getDoneVisits = (pageIndex, pageSize) => {
     headers: { ...authHeader(), 'Content-Type': 'application/json' },
     credentials: 'include',
   };
-  return fetch(`${config.apiURL}/patient/getdonevisits?pageIndex=${pageIndex}&pageSize=${pageSize}`, requestOptions).then(handleResponse);
+  return fetch(`${apiUrl}/patient/getdonevisits?pageIndex=${pageIndex}&pageSize=${pageSize}`, requestOptions).then(handleResponse);
 };
 
 const getVisitDetails = (data) => {
@@ -85,7 +87,7 @@ const getVisitDetails = (data) => {
     credentials: 'include',
     body: JSON.stringify(data),
   };
-  return fetch(`${config.apiURL}/patient/getvisitdetails`, requestOptions).then(handleResponse);
+  return fetch(`${apiUrl}/patient/getvisitdetails`, requestOptions).then(handleResponse);
 };
 
 const getMessages = (data) => {
@@ -95,7 +97,7 @@ const getMessages = (data) => {
     credentials: 'include',
     body: JSON.stringify(data),
   };
-  return fetch(`${config.apiURL}/patient/getmessages`, requestOptions).then(handleResponse);
+  return fetch(`${apiUrl}/patient/getmessages`, requestOptions).then(handleResponse);
 };
 const sendMessage = (data) => {
   const requestOptions = {
@@ -104,7 +106,7 @@ const sendMessage = (data) => {
     credentials: 'include',
     body: JSON.stringify(data),
   };
-  return fetch(`${config.apiURL}/patient/sendmessage`, requestOptions).then(handleResponse);
+  return fetch(`${apiUrl}/patient/sendmessage`, requestOptions).then(handleResponse);
 };
 const getPrescritpions = (data) => {
   const requestOptions = {
@@ -113,7 +115,7 @@ const getPrescritpions = (data) => {
     credentials: 'include',
     body: JSON.stringify(data),
   };
-  return fetch(`${config.apiURL}/patient/getprescritpions`, requestOptions).then(handleResponse);
+  return fetch(`${apiUrl}/patient/getprescritpions`, requestOptions).then(handleResponse);
 };
 const getFindings = (data) => {
   const requestOptions = {
@@ -122,7 +124,7 @@ const getFindings = (data) => {
     credentials: 'include',
     body: JSON.stringify(data),
   };
-  return fetch(`${config.apiURL}/patient/getfindings`, requestOptions).then(handleResponse);
+  return fetch(`${apiUrl}/patient/getfindings`, requestOptions).then(handleResponse);
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -139,5 +141,5 @@ export default {
   getMessages,
   sendMessage,
   getPrescritpions,
-  getFindings
+  getFindings,
 };

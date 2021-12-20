@@ -9,6 +9,7 @@ import { FormComponent } from '../../components/styles/form.style';
 import { Spinner } from '../../components/styles/spinner.style';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import config from '../../config';
 
 const StyledLink = styled(Link)`
   text-decoration: none;
@@ -31,9 +32,9 @@ const StyledSpinner = styled(Spinner)`
     left:20%;
 
   }
-`;
-
+  `;
 const LoginPage = () => {
+  console.log(config.apiURL());
   const validationSchema = Yup.object().shape({
     login: Yup.string().required('Login is required'),
     password: Yup.string().required('Password is required'),

@@ -2,6 +2,8 @@ import config from '../config';
 import authHeader from '../helpers/auth-header';
 import handleResponse from '../helpers/handle-response';
 
+const apiUrl = config.apiURL();
+
 const getVisitsInWeek = (data) => {
   const requestOptions = {
     method: 'POST',
@@ -9,7 +11,7 @@ const getVisitsInWeek = (data) => {
     credentials: 'include',
     body: JSON.stringify({ weekDay: data.toISOString() }),
   };
-  return fetch(`${config.apiURL}/doctor/getvisits`, requestOptions).then(handleResponse);
+  return fetch(`${apiUrl}/doctor/getvisits`, requestOptions).then(handleResponse);
 };
 
 const deleteVisit = (data) => {
@@ -19,7 +21,7 @@ const deleteVisit = (data) => {
     credentials: 'include',
     body: JSON.stringify({ visitId: data }),
   };
-  return fetch(`${config.apiURL}/doctor/deletevisit`, requestOptions).then(handleResponse);
+  return fetch(`${apiUrl}/doctor/deletevisit`, requestOptions).then(handleResponse);
 };
 
 const addVisits = (data) => {
@@ -29,7 +31,7 @@ const addVisits = (data) => {
     credentials: 'include',
     body: JSON.stringify(data),
   };
-  return fetch(`${config.apiURL}/doctor/createvisit`, requestOptions).then(handleResponse);
+  return fetch(`${apiUrl}/doctor/createvisit`, requestOptions).then(handleResponse);
 };
 
 const getDoctorTypes = (data) => {
@@ -38,7 +40,7 @@ const getDoctorTypes = (data) => {
     headers: { ...authHeader(), 'Content-Type': 'application/json' },
     credentials: 'include',
   };
-  return fetch(`${config.apiURL}/doctor/gettypes`, requestOptions).then(handleResponse);
+  return fetch(`${apiUrl}/doctor/gettypes`, requestOptions).then(handleResponse);
 };
 
 const getVisitDetails = (data) => {
@@ -48,7 +50,7 @@ const getVisitDetails = (data) => {
     credentials: 'include',
     body: JSON.stringify(data),
   };
-  return fetch(`${config.apiURL}/doctor/getvisitdetails`, requestOptions).then(handleResponse);
+  return fetch(`${apiUrl}/doctor/getvisitdetails`, requestOptions).then(handleResponse);
 };
 
 const finishVisit = (data) => {
@@ -58,7 +60,7 @@ const finishVisit = (data) => {
     credentials: 'include',
     body: JSON.stringify(data),
   };
-  return fetch(`${config.apiURL}/doctor/finishvisit`, requestOptions).then(handleResponse);
+  return fetch(`${apiUrl}/doctor/finishvisit`, requestOptions).then(handleResponse);
 };
 
 const cancelVisit = (data) => {
@@ -68,7 +70,7 @@ const cancelVisit = (data) => {
     credentials: 'include',
     body: JSON.stringify(data),
   };
-  return fetch(`${config.apiURL}/doctor/cancelvisit`, requestOptions).then(handleResponse);
+  return fetch(`${apiUrl}/doctor/cancelvisit`, requestOptions).then(handleResponse);
 };
 
 const getMessages = (data) => {
@@ -78,7 +80,7 @@ const getMessages = (data) => {
     credentials: 'include',
     body: JSON.stringify(data),
   };
-  return fetch(`${config.apiURL}/doctor/getmessages`, requestOptions).then(handleResponse);
+  return fetch(`${apiUrl}/doctor/getmessages`, requestOptions).then(handleResponse);
 };
 const sendMessage = (data) => {
   const requestOptions = {
@@ -87,7 +89,7 @@ const sendMessage = (data) => {
     credentials: 'include',
     body: JSON.stringify(data),
   };
-  return fetch(`${config.apiURL}/doctor/sendmessage`, requestOptions).then(handleResponse);
+  return fetch(`${apiUrl}/doctor/sendmessage`, requestOptions).then(handleResponse);
 };
 
 const sendPrescription = (data) => {
@@ -97,7 +99,7 @@ const sendPrescription = (data) => {
     credentials: 'include',
     body: JSON.stringify(data),
   };
-  return fetch(`${config.apiURL}/doctor/sendprescritpion`, requestOptions).then(handleResponse);
+  return fetch(`${apiUrl}/doctor/sendprescritpion`, requestOptions).then(handleResponse);
 };
 
 const getPrescritpions = (data) => {
@@ -107,7 +109,7 @@ const getPrescritpions = (data) => {
     credentials: 'include',
     body: JSON.stringify(data),
   };
-  return fetch(`${config.apiURL}/doctor/getprescritpions`, requestOptions).then(handleResponse);
+  return fetch(`${apiUrl}/doctor/getprescritpions`, requestOptions).then(handleResponse);
 };
 
 const deletePrescription = (data) => {
@@ -117,7 +119,7 @@ const deletePrescription = (data) => {
     credentials: 'include',
     body: JSON.stringify(data),
   };
-  return fetch(`${config.apiURL}/doctor/deleteprescritpion`, requestOptions).then(handleResponse);
+  return fetch(`${apiUrl}/doctor/deleteprescritpion`, requestOptions).then(handleResponse);
 };
 const sendFinding = (data) => {
   const requestOptions = {
@@ -126,7 +128,7 @@ const sendFinding = (data) => {
     credentials: 'include',
     body: JSON.stringify(data),
   };
-  return fetch(`${config.apiURL}/doctor/sendfinding`, requestOptions).then(handleResponse);
+  return fetch(`${apiUrl}/doctor/sendfinding`, requestOptions).then(handleResponse);
 };
 
 const getFindings = (data) => {
@@ -136,7 +138,7 @@ const getFindings = (data) => {
     credentials: 'include',
     body: JSON.stringify(data),
   };
-  return fetch(`${config.apiURL}/doctor/getfindings`, requestOptions).then(handleResponse);
+  return fetch(`${apiUrl}/doctor/getfindings`, requestOptions).then(handleResponse);
 };
 const deleteFinding = (data) => {
   const requestOptions = {
@@ -145,7 +147,7 @@ const deleteFinding = (data) => {
     credentials: 'include',
     body: JSON.stringify(data),
   };
-  return fetch(`${config.apiURL}/doctor/deletefinding`, requestOptions).then(handleResponse);
+  return fetch(`${apiUrl}/doctor/deletefinding`, requestOptions).then(handleResponse);
 };
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
