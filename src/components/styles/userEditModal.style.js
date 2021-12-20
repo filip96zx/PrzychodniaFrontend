@@ -8,7 +8,6 @@ export const UserEditModalComponent = styled.div`
   top: 0;
   left: 0;
   flex-grow: 1;
-  background-color: rgba(0, 0, 0, 0.42);
   width: 100vw;
   min-height: 100vh;
 
@@ -21,7 +20,7 @@ export const UserEditModalComponent = styled.div`
     background-color: white;
     max-width: 39rem;
     border-radius: 1em;
-    box-shadow: 0 0 2px 2px gray;
+    box-shadow: 0 0 2px 2px gray, 0 0 0 10000px rgba(0, 0, 0, 0.42);
     .close-btn-container {
       position: absolute;
       right:0;

@@ -14,6 +14,7 @@ import DoctorCreateVisitsPage from './Pages/DoctorCreateVisitsPage/DoctorCreateV
 import PatientRegisterPage from './Pages/PatientRegisterPage/PatientRegisterPage';
 import PatientRegisteredVisitsPage from './Pages/PatientRegisteredVisitsPage/PatientRegisteredVisitsPage';
 import PatientDoneVisitsPage from './Pages/PatientDoneVisitsPage/PatientDoneVisitsPage';
+import ConfirmEmailPage from './Pages/ConfirmEmailPage/ConfirmEmailPage';
 
 const App = () => {
   const [user, setUser] = useState();
@@ -39,9 +40,6 @@ const App = () => {
       <Container>
         <div className="card">
         <Switch>
-          <Route exact path='/'>
-            <HomePage />
-          </Route>
           <Route path='/register'>{isLogged ? <Redirect push to='/' /> : <RegisterPage />}</Route>
           <Route path='/doctorcreatevisits'>{hasRole('doctor') ? <DoctorCreateVisitsPage /> : <Redirect push to='/' />}</Route>
           <Route path='/patientregister'>{hasRole('user') ? <PatientRegisterPage /> : <Redirect push to='/' />}</Route>
@@ -54,10 +52,16 @@ const App = () => {
           <Route path='/resetpassword/:userId/:code'>
             <ResetPasswordPage />
           </Route>
+          <Route path='/confirmemail/:userId/:code'>
+            <ConfirmEmailPage/>
+          </Route>
           <Route path='/forgotpassword'>
             <ForgotPassword />
           </Route>
           <Route path='/login'>{isLogged ? <Redirect push to='/' /> : <LoginPage />}</Route>
+          <Route path='/'>
+            <HomePage />
+          </Route>
         </Switch>
         </div>
       </Container>

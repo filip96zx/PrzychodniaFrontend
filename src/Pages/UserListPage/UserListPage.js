@@ -5,7 +5,6 @@ import { useParams, useHistory } from 'react-router-dom';
 import UserEditModal from '../../components/userEditModal';
 import { UserListComponent } from './style/UserListPage.style';
 
-
 const UserListPage = () => {
   const params = useParams();
   const history = useHistory();

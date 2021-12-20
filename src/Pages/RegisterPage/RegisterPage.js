@@ -54,7 +54,6 @@ const RegisterPage = () => {
     setIsLoading(true);
     setSucceed(false);
     const newUser = { ...data, dateOfBirth: data.dateOfBirth.toISOString().slice(0,10), gender: parseInt(data.gender), userName: data.email };
-    console.log(JSON.stringify(newUser))
     userService
       .register(newUser)
       .then(response => {

@@ -118,6 +118,10 @@ const addSpecialisation = (data) => {
   return fetch(`${config.apiURL}/admin/createspecialisation`, requestOptions).then(handleResponse);
 };
 
+const confirmEmail = (userId, code) => {
+  return fetch(`${config.apiURL}/users/confirmemail/${userId}/${code}`).then(handleResponse);
+};
+
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   getUserListPaginated,
@@ -134,5 +138,6 @@ export default {
   getSpecialisations,
   getRemovableSpecialisations,
   addSpecialisation,
-  deleteSpecialisation
+  deleteSpecialisation,
+  confirmEmail
 };

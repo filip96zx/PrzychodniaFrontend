@@ -51,7 +51,8 @@ const moveRotateBack = (move, rotate) =>
 
 
 export const NavbarComponent = styled.div`
-  position: relative;
+  position: sticky;
+  top: 0;
   box-shadow: 0 1px 2px 1px ${mainColor};
   min-height: 2rem;
   background-image: linear-gradient(190deg, ${mainColor} 0%, rgba(255, 255, 255, 1) 100%);
