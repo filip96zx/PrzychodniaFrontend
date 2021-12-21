@@ -51,7 +51,6 @@ const moveRotateBack = (move, rotate) =>
 
 
 export const NavbarComponent = styled.div`
-  position: sticky;
   top: 0;
   box-shadow: 0 1px 2px 1px ${mainColor};
   min-height: 2rem;
