@@ -1,7 +1,7 @@
 import config from '../config';
 import handleResponse from '../helpers/handle-response';
 
-const apiUrl = config.apiURL();
+const apiUrl = config.apiURL;
 
 const login = (login, password) => {
   const requestOptions = {

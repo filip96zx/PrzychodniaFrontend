@@ -2,7 +2,7 @@ import config from '../config';
 import handleResponse from '../helpers/handle-response';
 import authHeader from '../helpers/auth-header';
 
-const apiUrl = config.apiURL();
+const apiUrl = config.apiURL;
 
 const getUserListPaginated = (pageIndex, pageSize) => {
   const requestOptions = { method: 'GET', headers: authHeader(), credentials: 'include' };

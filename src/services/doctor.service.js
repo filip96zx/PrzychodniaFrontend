@@ -2,7 +2,7 @@ import config from '../config';
 import authHeader from '../helpers/auth-header';
 import handleResponse from '../helpers/handle-response';
 
-const apiUrl = config.apiURL();
+const apiUrl = config.apiURL;
 
 const getVisitsInWeek = (data) => {
   const requestOptions = {
