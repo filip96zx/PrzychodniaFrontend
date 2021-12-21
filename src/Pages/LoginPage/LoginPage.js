@@ -34,7 +34,6 @@ const StyledSpinner = styled(Spinner)`
   }
   `;
 const LoginPage = () => {
-  console.log(config.apiURL());
   const validationSchema = Yup.object().shape({
     login: Yup.string().required('Login is required'),
     password: Yup.string().required('Password is required'),
