@@ -1,8 +1,7 @@
 # Deploy
 
-Strona pod którą można zobaczyć projekt [Clinic](https://clinic-registration.herokuapp.com).\
+Strona pod którą można zobaczyć projekt http://vps-63e72677.vps.ovh.net
 
-https://clinic-registration.herokuapp.com
 
 ## Konta użytkowników
 
