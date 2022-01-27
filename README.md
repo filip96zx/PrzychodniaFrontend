@@ -2,6 +2,9 @@
 
 Strona pod którą można zobaczyć projekt https://clinic-registration.herokuapp.com/
 
+Pierwsze załadowanie aplikacji trwa chwilę ze względu że aplikacja jest na darmowym hostingu i jest wyłączona, włącza się dopiero gdy ktoś próbuje wejść na stronę aplikacji.\
+Tak samo jest też z backendem, więc pierwsze logowanie także trwa trochę dłużej.
+
 
 ## Konta użytkowników
 
